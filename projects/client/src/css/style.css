@@ -1,0 +1,15 @@
+/* Navbar.Collapse > Nav > Nav.Link > .navcoba:hover {
+  color: rgb(7, 7, 7);
+}
+
+Navbar.Collapse > Nav > Nav.Link > .navcoba:hover {
+  color: green;
+} */
+
+#navcoba:active {
+  color: rgb(3, 18, 151);
+}
+
+/* #navcoba:hover {
+  color: rgb(14, 224, 7);
+} */
