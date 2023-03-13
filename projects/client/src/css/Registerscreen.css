@@ -1,0 +1,21 @@
+/* .color {
+    background-color: #B68D40;
+    width: 100vw;
+} */
+
+input {
+    border: solid seagreen;
+  }
+ 
+
+  
+h2 {
+    font-size: 30px;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+.jarak {
+    padding: 50px;
+    border-radius: 20px;
+}
