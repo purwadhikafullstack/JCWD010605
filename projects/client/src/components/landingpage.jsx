@@ -44,7 +44,7 @@ function LandingPage() {
             <RangeDate />
           </Col>
         </Row>
-        <Container>
+        <Container className="d-flex justify-content-evenly">
           {propertys.map((val, idx) => {
             return <CardProperty key={idx} data={{ ...val }} />;
           })}

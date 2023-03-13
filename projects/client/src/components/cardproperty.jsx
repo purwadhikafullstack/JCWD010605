@@ -4,18 +4,19 @@ import { useState } from 'react';
 
 function CardProperty(props) {
   const [propertys, setPropertys] = useState({ ...props.data });
-  const [cat, setCat] = useState(props.data.categories);
+  // const [cat, setCat] = useState({ ...props.data.categories });
+  // console.log(propertys.categories.provinsi);
 
   return (
-    <Row xs={1} md={4}>
+    <Row xs={1} md={4} className="">
       <Col>
-        <Card className="hover-shadow" style={{ width: '16rem' }}>
-          <Card.Img className="bg-image hover-zoom" variant="top" src={propertys.propertyImage} />
-          <Card.Body className="hover-shadow">
+        <Card style={{ width: '16rem' }}>
+          <Card.Img className="" variant="top" style={{ height: '16rem', objectFit: 'cover' }} src={propertys.propertyImage} />
+          <Card.Body className="">
             <Card.Title>{propertys.name}</Card.Title>
-            <Card.Text className="">
-              <MdLocationOn style={{ color: 'red' }} />
-              {cat.provinsi}
+            <Card.Text style={{ fontSize: '13px' }}>
+              <MdLocationOn className="me-1" style={{ color: 'red' }} />
+              {propertys.category.kecamatan}, {propertys.category.kabupaten}, {propertys.category.provinsi}
             </Card.Text>
             {/* <Button variant="primary">Go somewhere</Button> */}
           </Card.Body>

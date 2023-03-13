@@ -1,6 +1,8 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const propertys = db.propertys;
+const categories = db.categories;
+
 const { sequelize } = require('../models');
 
 const propertysController = {
@@ -10,6 +12,12 @@ const propertysController = {
 
       const result = await propertys.findAll({
         attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
+        include: [
+          {
+            model: categories,
+            attributes: ['id', 'provinsi', 'kabupaten', 'kecamatan'],
+          },
+        ],
 
         order: [['id', 'DESC']],
       });
