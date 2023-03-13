@@ -1,16 +1,18 @@
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-date-range';
 
+import { FaCalendarAlt } from 'react-icons/fa';
 import format from 'date-fns/format';
 import { addDays } from 'date-fns';
-import { Form } from 'react-bootstrap';
+import '../css/style.css';
 
 export default function RangeDate() {
   const [range, setRange] = useState([
     {
       startDate: new Date(),
       endDate: addDays(new Date(), 6),
+      // minDate: new Date(),
       key: 'selection',
     },
   ]);
@@ -39,11 +41,11 @@ export default function RangeDate() {
 
   return (
     <>
-      <Form className="">
-        <Row className="mb-3 ">
-          <Form.Group className="" xs="10" as={Col} controlId="formGridState">
-            <Form.Label>Destination</Form.Label>
-            <Form.Select defaultValue="Choose...">
+      <Form>
+        <Row className="mb-3">
+          <Form.Group className="" xs="12" as={Col} controlId="formGridState">
+            <Form.Label className="m-0">Destination</Form.Label>
+            <Form.Select id="infocus" defaultValue="Choose...">
               <option>Choose...</option>
               <option>...</option>
             </Form.Select>
@@ -51,32 +53,55 @@ export default function RangeDate() {
         </Row>
 
         <Row className="mb-3 ">
-          <Col xs="5">
-            <Form.Label>Checkin</Form.Label>
-            <Form.Control className="" value={`${format(range[0].startDate, 'MM/dd/yyyy')}`} readOnly onClick={() => setOpen((open) => !open)} />
-
-            <div className="mt-2 position-absolute translate-middle-x start-50" ref={refOne}>
-              {open && <DateRange onChange={(item) => setRange([item.selection])} showDateDisplay={false} editableDateInputs={true} moveRangeOnFirstSelection={false} ranges={range} months={2} direction="horizontal" />}
-            </div>
+          <Col xs="6" className="">
+            <Form.Label className="m-0">Check-in</Form.Label>
+            <InputGroup className="mb-3  ">
+              <InputGroup.Text id="basic-addon1" className="px-2 bg-white border-2 border-end-0">
+                <FaCalendarAlt />
+              </InputGroup.Text>
+              <Form.Control
+                id="infocus"
+                className="rounded-end px-0 border-start-0 "
+                aria-label="Check-in"
+                aria-describedby="basic-addon1"
+                value={`${format(range[0].startDate, 'MM/dd/yyyy')}`}
+                readOnly
+                onClick={() => setOpen((open) => !open)}
+              />
+              <div className="mt-1" ref={refOne}>
+                {open && (
+                  <DateRange
+                    className="cus-shadow"
+                    onChange={(item) => setRange([item.selection])}
+                    showDateDisplay={false}
+                    editableDateInputs={true}
+                    moveRangeOnFirstSelection={false}
+                    ranges={range}
+                    months={2}
+                    minDate={new Date()}
+                    direction="horizontal"
+                  />
+                )}
+              </div>
+            </InputGroup>
           </Col>
-          <Col xs="5">
-            <Form.Label>Checkout</Form.Label>
-            <Form.Control className=" " value={` ${format(range[0].endDate, 'MM/dd/yyyy')}`} readOnly onClick={() => setOpen((open) => !open)} />
+          <Col xs="6">
+            <Form.Label className="m-0">Check-out</Form.Label>
+            <InputGroup className="mb-3 ">
+              <InputGroup.Text id="basic-addon1" className="ps-2 pe-1 bg-white border-2 border-end-0">
+                <FaCalendarAlt />
+              </InputGroup.Text>
+              <Form.Control id="infocus" aria-label="Check-out" aria-describedby="basic-addon1" className="px-0 border-start-0" value={` ${format(range[0].endDate, 'MM/dd/yyyy')}`} readOnly onClick={() => setOpen((open) => !open)} />
+            </InputGroup>
           </Col>
         </Row>
 
-        <Button className="" variant="primary" type="submit">
-          Submit
-        </Button>
-        <Row className=""></Row>
+        <Row className="mx-auto">
+          <Button className="" variant="light" id="btn-tan" type="submit">
+            Submit
+          </Button>
+        </Row>
       </Form>
-      {/* <div>
-        <input value={`${format(range[0].startDate, 'MM/dd/yyyy')}`} readOnly onClick={() => setOpen((open) => !open)} />
-
-        <input value={`${format(range[0].endDate, 'MM/dd/yyyy')}`} readOnly onClick={() => setOpen((open) => !open)} />
-
-        <div ref={refOne}>{open && <DateRange onChange={(item) => setRange([item.selection])} editableDateInputs={true} moveRangeOnFirstSelection={false} ranges={range} months={2} direction="horizontal" />}</div>
-      </div> */}
     </>
   );
 }

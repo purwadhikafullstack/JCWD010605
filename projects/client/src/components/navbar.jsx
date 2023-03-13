@@ -5,8 +5,8 @@ import '../css/style.css';
 function NavbarTop() {
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" sticky="top" style={{ background: '#F4EBD0' }} variant="light">
-        <Container fluid className="fw-bold ms-4 me-4">
+      <Navbar collapseOnSelect className="border-bottom border-1" expand="lg" sticky="top" style={{ background: '#F4EBD0' }} variant="light">
+        <Container fluid className="fw-bold ms-4 me-4 ">
           <Navbar.Brand href="#home" className="fs-4 ">
             <img alt="" src={Logo} width="40" height="40" className="d-inline-block align-center " /> JoyStay
           </Navbar.Brand>
@@ -28,10 +28,10 @@ function NavbarTop() {
               </Nav.Link>
             </Nav>
             <Nav className="gap-2">
-              <Button size="sm" className="rounded-2" href="#" variant="outline-success">
+              <Button size="sm" className="rounded-2" href="#" variant="light" id="btn-nav-tan">
                 Sign in
               </Button>
-              <Button size="sm" className="rounded-2" href="#" variant="success">
+              <Button size="sm" className="rounded-2" id="btn-nav-tan2" variant="light" href="#">
                 Sign up
               </Button>
             </Nav>
