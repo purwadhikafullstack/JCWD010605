@@ -11,7 +11,7 @@ export default function ModalForm(props) {
 
         <Modal
             {...props}
-            
+
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -28,7 +28,7 @@ export default function ModalForm(props) {
             <Modal.Footer>
 
                 <Button variant='secondary' onClick={props.onHide}>Close</Button>
-                <button type="submit" class="btn btn-primary ">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
 
             </Modal.Footer>
         </Modal>
