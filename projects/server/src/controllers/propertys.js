@@ -32,6 +32,26 @@ const propertysController = {
       });
     }
   },
+  deletePropertys: async (req, res) => {
+    try {
+      const id = req.params.id;
+
+      const result = await propertys.destroy({
+        where: {
+          id: id,
+        },
+      });
+      return res.status(200).json({
+        message: 'property deleted',
+        result: result,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({
+        message: err,
+      });
+    }
+  },
 };
 
 module.exports = propertysController;

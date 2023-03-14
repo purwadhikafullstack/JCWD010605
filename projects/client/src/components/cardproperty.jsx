@@ -1,16 +1,36 @@
 import { Row, Col, Button, Card } from 'react-bootstrap';
 import { MdLocationOn } from 'react-icons/md';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { axiosInstance } from '../config/config.js';
 
 function CardProperty(props) {
   const [propertys, setPropertys] = useState({ ...props.data });
   // const [cat, setCat] = useState({ ...props.data.categories });
   // console.log(propertys.categories.provinsi);
 
+  async function delPropertys() {
+    // alert("test")
+    const res = await axiosInstance
+      .post('/propertys/' + propertys.id)
+      .then((res) => {
+        // console.log(res);
+        // console.log(datas);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    props.fetchdata();
+  }
+
+  useEffect(() => {
+    console.log(propertys);
+  }, [propertys]);
+
   return (
-    <Row xs={1} md={4} className="">
+    <Row xs={1} md={2} className="g-4">
+      {/* {Array.from({ length: 1 }).map((_, idx) => ( */}
       <Col>
-        <Card style={{ width: '16rem' }}>
+        <Card className="" style={{ width: '16rem' }}>
           <Card.Img className="" variant="top" style={{ height: '16rem', objectFit: 'cover' }} src={propertys.propertyImage} />
           <Card.Body className="">
             <Card.Title>{propertys.name}</Card.Title>
@@ -18,10 +38,18 @@ function CardProperty(props) {
               <MdLocationOn className="me-1" style={{ color: 'red' }} />
               {propertys.category.kecamatan}, {propertys.category.kabupaten}, {propertys.category.provinsi}
             </Card.Text>
-            {/* <Button variant="primary">Go somewhere</Button> */}
+            <Button
+              onClick={() => {
+                delPropertys();
+              }}
+              variant="primary"
+            >
+              Go somewhere
+            </Button>
           </Card.Body>
         </Card>
       </Col>
+      {/* ))} */}
       {/* <Col>
         <Card style={{ width: '16rem' }}>
           <Card.Img variant="top" src="https://balidave.com/wp-content/uploads/2022/11/best-hotel-bali.jpeg" />

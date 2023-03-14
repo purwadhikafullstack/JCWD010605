@@ -15,12 +15,13 @@ app.use(
 app.use(express.json());
 
 //#region API ROUTES
-const { propertysRoute } = require('./routes');
+const { propertysRoute, authRoute } = require('./routes');
 
 const db = require('./models');
-db.sequelize.sync({ alter: true });
+// db.sequelize.sync({ alter: true });
 
 app.use('/propertys', propertysRoute);
+app.use('/auth', authRoute);
 // ===========================
 // NOTE : Add your routes here
 

@@ -27,7 +27,7 @@ function LandingPage() {
   }, []);
 
   useEffect(() => {
-    console.log(propertys);
+    // console.log(propertys);
   }, [propertys]);
 
   return (
@@ -44,9 +44,9 @@ function LandingPage() {
             <RangeDate />
           </Col>
         </Row>
-        <Container className="d-flex justify-content-evenly">
+        <Container className="d-flex  gap-4">
           {propertys.map((val, idx) => {
-            return <CardProperty key={idx} data={{ ...val }} />;
+            return <CardProperty fetchdata={fetchPropertys} key={idx} data={{ ...val }} />;
           })}
           {/* <CardProperty /> */}
         </Container>
