@@ -5,7 +5,17 @@ const { authController } = require('../controllers');
 
 router.post('/v1', authController.register);
 
-router.get('/', authController.getUsers);
+// router.get('/', authController.getUsers);
+
+router.post('/login', authController.login);
+
+// router.delete('/:id', authController.deleteUsers);
+
+
+
+
+
+
 
 
 

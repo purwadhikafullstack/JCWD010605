@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, FloatingLabel, InputGroup } from 'react-bootstrap';
+import { Form, Button, Container, FloatingLabel, InputGroup, Row } from 'react-bootstrap';
 import '../css/Registerscreen.css';
 import { BsFillEyeSlashFill } from 'react-icons/bs';
 import { BsFillEyeFill } from 'react-icons/bs';
@@ -7,8 +7,13 @@ import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import { useFormik } from 'formik';
 import { axiosInstance } from '../config/config.js';
+import { useNavigate } from "react-router-dom"
+
+
 
 function Registerscreen() {
+
+  
   YupPassword(Yup);
 
   // const [status, setStatus] = useState('');
@@ -22,6 +27,8 @@ function Registerscreen() {
   const toggleConPasswordVisiblity = () => {
     setConPasswordShown(conPasswordShown ? false : true);
   };
+
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -46,16 +53,22 @@ function Registerscreen() {
       // birthDate: Yup.string().required('birthdate tidak boleh kosong'),
       // profilImage: Yup.string().required('profil image tidak boleh kosong'),
     }),
+
+
     onSubmit: async () => {
-      // alert("test")
+      
+
+
       const res = await axiosInstance
         .post('/auth/v1', formik.values)
-        .then((res) => {
+        .then((res) => { 
           console.log(res.data);
           alert('registrasi berhasil!')
           // setStatus('success');
           // setMsg('Data inserted');
+          navigate('/login')
         })
+        
         .catch((error) => {
           console.log(error);
           alert('akun sudah terdaftar!')
@@ -68,21 +81,24 @@ function Registerscreen() {
 
   return (
     <>
-      <Container className='wrapper mt-5 '> 
-        <Container className='row justify-content-center'> 
-          <Container className='col md-5' >
-            <Container className='shadow-lg jarak mt-5 bg-light'>
+
+
+     
+        <Container fluid className='color-overlay d-flex justify-content-center align-items-center'> 
+          
+            <Row className='shadow-lg jarak mt-5 bg-light'>
               <h2>Create Account</h2>
 
           
-                <Form className="d-grid gap-1">
+                <Form className="d-grid gap-1 ">
                   <Form.Group className="mb-3" id="name" controlId="formGroupName">
                     <FloatingLabel controlId="floatingName" label="Name">
                       <Form.Control name="name" onChange={(e) => formik.setFieldValue('name', e.target.value)} type="name" placeholder="Enter Name" />
                     </FloatingLabel>
                     {formik.errors.name}
-
                   </Form.Group>
+                  
+
                   <Form.Group className="mb-3" id="email" controlId="formGroupEmail">
                     {/* <Form.Label>Email address</Form.Label> */}
                     <FloatingLabel controlId="floatingEmail" label="Email">
@@ -102,7 +118,7 @@ function Registerscreen() {
                   {formik.errors.password}
                   <InputGroup className="mt-3">
                     {/* <Form.Label>Confirm Password</Form.Label> */}
-                    <FloatingLabel controlId="floatingConfirmPassword" label="ConfirmPassword">
+                    <FloatingLabel controlId="floatingConfirmPassword" label="Confirm Password">
                       <Form.Control name="password" onChange={(e) => formik.setFieldValue('confirmPassword', e.target.value)} type={conPasswordShown ? 'text' : 'password'} placeholder="Confirm Password" />
                     </FloatingLabel>
                     <InputGroup.Text id="basic-addon2" onClick={toggleConPasswordVisiblity}>
@@ -112,22 +128,22 @@ function Registerscreen() {
                   {formik.errors.confirmPassword}
 
                   <InputGroup className="mt-3">
-                    <FloatingLabel controlId="floatingPhoneNumber" label="PhoneNumber">
+                    <FloatingLabel controlId="floatingPhoneNumber" label="Phone Number">
                     <Form.Control name="phone_number" onChange={(e) => formik.setFieldValue('phone_number', e.target.value)} type="text" placeholder="Enter phone number" />
                     </FloatingLabel>
                   </InputGroup>
                     {formik.errors.phone_number}
                   </Form>
-                  <Button className="mt-4" onClick={formik.handleSubmit}  bg={'#0095F6'} color={'white'}>
+                  <Button className="mt-4" onClick={formik.handleSubmit}  bg={'#0095F6'} color={'white'}  >
                   Register
                   </Button>
                   
                 
 
-            </Container>
-          </Container> 
+            </Row>
+          
         </Container>
-      </Container>
+      
     </>
     
   );
