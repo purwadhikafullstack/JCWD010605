@@ -7,7 +7,7 @@ function NavbarTop() {
     <>
       <Navbar collapseOnSelect className="border-bottom border-1" expand="lg" sticky="top" style={{ background: '#F4EBD0' }} variant="light">
         <Container fluid className="fw-bold ms-4 me-4 ">
-          <Navbar.Brand href="#home" className="fs-4 ">
+          <Navbar.Brand href="/" className="fs-4 ">
             <img alt="" src={Logo} width="40" height="40" className="d-inline-block align-center " /> JoyStay
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

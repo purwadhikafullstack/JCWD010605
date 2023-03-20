@@ -18,7 +18,7 @@ app.use(express.json());
 const { propertysRoute, authRoute } = require('./routes');
 
 const db = require('./models');
-// db.sequelize.sync({ alter: true });
+db.sequelize.sync({ alter: true });
 
 app.use('/propertys', propertysRoute);
 app.use('/auth', authRoute);

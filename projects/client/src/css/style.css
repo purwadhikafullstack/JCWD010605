@@ -64,3 +64,21 @@ Navbar.Collapse > Nav > Nav.Link > .navcoba:hover {
   outline: none;
   box-shadow: none;
 }
+
+.sticky-card {
+  position: sticky;
+  top: 20rem;
+  /* bottom: 20rem; */
+  z-index: 999;
+  margin-top: 3rem;
+}
+
+.cardPosition2 {
+  right: 6rem;
+  width: 23rem;
+}
+
+.sticky-stop {
+  padding-top: 7rem;
+  /* margin-top: 20rem; */
+}

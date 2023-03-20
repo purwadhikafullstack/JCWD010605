@@ -37,7 +37,25 @@ db.Sequelize = Sequelize;
 db.propertys = require('./propertys')(sequelize, Sequelize);
 db.categories = require('./categories')(sequelize, Sequelize);
 db.users = require('./users')(sequelize, Sequelize);
+db.fasilities = require('./fasilities')(sequelize, Sequelize);
+db.rooms = require('./rooms')(sequelize, Sequelize);
+db.special_price = require('./special_price')(sequelize, Sequelize);
+db.available_date = require('./available_date')(sequelize, Sequelize);
 
 db.propertys.belongsTo(db.categories, { foreignKey: 'categories_id' });
+db.rooms.belongsTo(db.propertys, { foreignKey: 'propertys_id' });
+db.rooms.belongsTo(db.special_price, { foreignKey: 'special_price_id' });
+db.rooms.belongsTo(db.available_date, { foreignKey: 'available_date_id' });
+db.transaction.belongsTo(db.rooms, { foreignKey: 'room_id' });
+
+//propertys_fasilities
+db.propertys.belongsToMany(db.fasilities, {
+  through: db.propertys_fasilities,
+  foreignKey: 'property_id',
+});
+db.fasilities.belongsToMany(db.propertys, {
+  through: db.propertys_fasilities,
+  foreignKey: 'fasility_id',
+});
 
 module.exports = db;

@@ -83,16 +83,15 @@ function Registerscreen() {
             <FloatingLabel controlId="floatingName" label="Name">
               <Form.Control name="name" onChange={(e) => formik.setFieldValue('name', e.target.value)} type="name" placeholder="Enter Name" />
             </FloatingLabel>
-
-            {formik.errors.name}
           </Form.Group>
+          {formik.errors.name}
           <Form.Group className="mb-3" id="email" controlId="formGroupEmail">
             {/* <Form.Label>Email address</Form.Label> */}
             <FloatingLabel controlId="floatingEmail" label="Email">
               <Form.Control name="email" onChange={(e) => formik.setFieldValue('email', e.target.value)} type="email" placeholder="Enter email" />
             </FloatingLabel>
-            {formik.errors.email}
           </Form.Group>
+          {formik.errors.email}
 
           <InputGroup id="password" className="mt-3" controlId="formGroupPassword">
             <FloatingLabel controlId="floatingPassword" label="Password">
