@@ -1,5 +1,5 @@
 // import LandingPage from '../components/landingpage';
-import Tableaja from "../components/tablelocation";
+import Tableaja from "../components/tntTablelocation";
 
 const routes = [
 

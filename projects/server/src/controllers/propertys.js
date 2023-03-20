@@ -8,18 +8,18 @@ const { sequelize } = require('../models');
 const propertysController = {
   getPropertys: async (req, res) => {
     try {
-      const id = req.params.id;
+      // const id = req.params.id;
 
-      const result = await propertys.findAll({
-        attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
-        include: [
-          {
-            model: categories,
-            attributes: ['id', 'provinsi', 'kabupaten', 'kecamatan'],
-          },
-        ],
+      const result = await categories.findAll({
+        // attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
+        // include: [
+        //   {
+        //     model: categories,
+        //     attributes: ['id', 'provinsi', 'kabupaten', 'kecamatan'],
+        //   },
+        // ],
 
-        order: [['id', 'DESC']],
+        // order: [['id', 'DESC']],
       });
 
       return res.status(200).json({

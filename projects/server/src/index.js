@@ -28,6 +28,30 @@ app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`);
 });
 
+// app.get("/ambil", async (req, res) => {
+//   const sqlGet = "SELECT * FROM categories"
+//   let result
+//   try {
+//     result = await db.sequelize.query(sqlGet, { type: db.Sequelize.QueryTypes.SELECT })
+//   } catch (err) {
+//     console.log(err)
+//   }
+  
+//   // res.json(result)
+//   res.send("Hello")
+// });
+
+// app.post("/post", (req, res) => {
+//   const { kecamatan, kabupaten, provinsi } = req.body;
+//   const sqlInsert = "INSERT INTO categories (kecamatan, kabupaten, provinsi) VALUES (?,?,?)"
+//   db.query(sqlGet, [kecamatan, kabupaten, provinsi],(error, result) => {
+//     if (error) {
+//       console.log(error);
+//     }
+//   })
+// });
+
+
 app.get('/api/greetings', (req, res, next) => {
   res.status(200).json({
     message: 'Hello, Student !',
@@ -59,12 +83,12 @@ app.use((err, req, res, next) => {
 
 //#region CLIENT
 const clientPath = '../../client/build';
-app.use(express.static(join(__dirname, clientPath)));
+// app.use(express.static(join(__dirname, clientPath)));
 
-// Serve the HTML page
-app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, clientPath, 'index.html'));
-});
+// // Serve the HTML page
+// app.get('*', (req, res) => {
+//   res.sendFile(join(__dirname, clientPath, 'index.html'));
+// });
 
 //#endregion
 

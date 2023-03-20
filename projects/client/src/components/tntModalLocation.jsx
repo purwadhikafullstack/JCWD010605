@@ -1,10 +1,10 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React from "react";
-import FormLocation from './form';
+import FormLocation from './tntFormLocation';
 
 
-export default function ModalForm(props) {
+export default function ModalLocation(props) {
 
     return (
 
@@ -28,7 +28,7 @@ export default function ModalForm(props) {
             <Modal.Footer>
 
                 <Button variant='secondary' onClick={props.onHide}>Close</Button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                {/* <button type="submit" class="btn btn-primary">Submit</button> */}
 
             </Modal.Footer>
         </Modal>
