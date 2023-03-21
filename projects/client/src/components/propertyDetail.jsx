@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import NavbarTop from './navbar';
 import Banner from '../img/banner3.jpg';
 import Footer from './footer';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { axiosInstance } from '../config/config.js';
 import '../css/style.css';
 
@@ -11,6 +11,7 @@ export default function PropertyDetail() {
   const [detailPro, setDetailPro] = useState([]);
   const [roomsDetail, setRoomsDetail] = useState([]);
   const [selectedRooms, setSelectedRooms] = useState([]);
+  const [transRoom, setTransRoom] = useState([]);
 
   const { id } = useParams();
 
@@ -42,6 +43,36 @@ export default function PropertyDetail() {
       });
   };
 
+  const handleAddTransaction = async () => {
+    try {
+      if (selectedRooms.length > 0) {
+        const roomIds = selectedRooms.map((room) => room.id);
+        console.log(roomIds);
+        const response = await axiosInstance.post('/propertys/transactions', { id: roomIds });
+        console.log(response.data);
+      } else {
+        alert('Please select a room before booking');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleReserveRoom = (room) => {
+    if (selectedRooms.some((selectedRoom) => selectedRoom.id === room.id)) {
+      setSelectedRooms((prevSelectedRooms) => prevSelectedRooms.filter((selectedRoom) => selectedRoom.id !== room.id));
+    } else {
+      setSelectedRooms((prevSelectedRooms) => prevSelectedRooms.concat(room));
+    }
+  };
+  // const handleCancelClick = (room) => {
+  //   setSelectedRooms(selectedRooms.filter((selectedRoom) => selectedRoom.id !== room.id));
+  // };
+
+  // const handleAddTransaction = (sroomsIds) => {
+  //   addTransaction(roomIds);
+  // };
+
   useEffect(() => {
     fetchDetailProperty();
     fetchRoomsDetail();
@@ -57,7 +88,7 @@ export default function PropertyDetail() {
           <Row>
             <Image alt="" src={detail.propertyImage} className="m-0 p-0" style={{ height: '25rem', width: '100%', objectFit: 'cover' }} />
           </Row>
-          <div className="sticky-card ">
+          {/* <div className="sticky-card ">
             <Card className="selected-rooms-card cardPosition2 shadow position-absolute translate-middle-y" style={{ height: '25rem' }}>
               <Card.Body>
                 <Card.Title>Selected Rooms</Card.Title>
@@ -72,9 +103,27 @@ export default function PropertyDetail() {
                 ) : (
                   <p>Please select room</p>
                 )}
-                {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-                <Card.Text>Some quick example text to build on the card title and make up the bulk of the card's content.</Card.Text> */}
-                <Button>Book Now</Button>
+                <Button onClick={handleAddTransaction}>Book Now</Button>
+              </Card.Body>
+            </Card>
+          </div> */}
+
+          <div className="sticky-card ">
+            <Card className="selected-rooms-card cardPosition2 shadow position-absolute translate-middle-y" style={{ height: '25rem' }}>
+              <Card.Body>
+                <Card.Title>Selected Rooms</Card.Title>
+                {selectedRooms.length > 0 ? (
+                  <>
+                    {selectedRooms.map((room) => (
+                      <div key={room.id}>
+                        <p>{room.name}</p>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <p>Please select a room</p>
+                )}
+                <Button onClick={handleAddTransaction}>Book Now</Button>
               </Card.Body>
             </Card>
           </div>
@@ -124,7 +173,30 @@ export default function PropertyDetail() {
           ))}
         </Container>
       ))}
+
       {roomsDetail.map((room) => (
+        <Container key={room.id} className="">
+          <Row className="">
+            <Col md={4} className="bg-success">
+              <h6>{room.name}</h6>
+              <p>{room.description}</p>
+            </Col>
+            <Col md={1} className="bg-danger">
+              <p>{room.special_price?.price}</p>
+            </Col>
+            <Col md={1} className="bg-success">
+              <p>{room.status}</p>
+            </Col>
+            <Col md={1} className="bg-secondary">
+              <Button onClick={() => handleReserveRoom(room)} disabled={room.status === 'Booked'}>
+                {selectedRooms.some((selectedRoom) => selectedRoom.id === room.id) ? 'Cancel Reserve' : 'Select Room'}
+              </Button>
+            </Col>
+            <Col md={4} className=""></Col>
+          </Row>
+        </Container>
+      ))}
+      {/* {roomsDetail.map((room) => (
         <Container key={room.id} className="">
           <Row className="">
             <Col md={4} className="bg-success">
@@ -157,7 +229,7 @@ export default function PropertyDetail() {
             <Col md={4} className=""></Col>
           </Row>
         </Container>
-      ))}
+      ))} */}
       <Container fluid className="sticky-stop">
         <Footer />
       </Container>

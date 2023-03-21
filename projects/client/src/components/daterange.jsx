@@ -68,10 +68,10 @@ export default function RangeDate() {
                 readOnly
                 onClick={() => setOpen((open) => !open)}
               />
-              <div className="mt-1" ref={refOne}>
+              <div className="mt-2" ref={refOne}>
                 {open && (
                   <DateRange
-                    className="cus-shadow"
+                    className="cus-shadow position-absolute start-0 top-100 mt-1"
                     onChange={(item) => setRange([item.selection])}
                     showDateDisplay={false}
                     editableDateInputs={true}
