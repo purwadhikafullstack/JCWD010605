@@ -1,0 +1,82 @@
+
+
+Navbar.Collapse > Nav > Nav.Link > .navcoba:hover {
+  color: green;
+} */
+
+#navcoba:active {
+  color: rgb(3, 18, 151);
+}
+
+/* #navcoba:hover {
+  color: rgb(14, 224, 7);
+} */
+#btn-nav-tan {
+  border-color: #b68d40;
+  background-color: white;
+  border: solid 2px #b68d40;
+  color: #b68d40;
+}
+
+#btn-nav-tan:hover {
+  background-color: #b68d40;
+  color: white;
+}
+
+#btn-nav-tan2 {
+  background-color: #b68d40;
+  color: white;
+  text-align: center;
+  border: solid 2px #b68d40;
+}
+
+#btn-nav-tan2:hover {
+  border: solid 2px #a57f39;
+  background-color: #a57f39;
+  color: white;
+}
+
+#btn-tan {
+  background-color: #b68d40;
+  color: white;
+  border: none;
+  box-shadow: 3px 3px 5px rgb(211, 209, 209);
+}
+
+.cus-shadow {
+  box-shadow: 3px 3px 5px rgb(97, 95, 95);
+}
+
+/* #btn-tan {
+  border-color: #04aa6d;
+  border: solid 3px #04aa6d;
+  color: green;
+}*/
+
+#btn-tan:hover {
+  background-color: #a57f39;
+  color: white;
+}
+
+#infocus:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.sticky-card {
+  position: sticky;
+  top: 20rem;
+  /* bottom: 20rem; */
+  z-index: 999;
+  margin-top: 3rem;
+}
+
+.cardPosition2 {
+  right: 6rem;
+  width: 23rem;
+}
+
+.sticky-stop {
+  padding-top: 7rem;
+  /* margin-top: 20rem; */
+}

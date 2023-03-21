@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, FloatingLabel, InputGroup, Row } from 'react-bootstrap';
+import { Form, Button, Container, FloatingLabel, InputGroup, Row, Nav } from 'react-bootstrap';
 // import '../css/Loginscreen.css';
 import { BsFillEyeSlashFill } from 'react-icons/bs';
 import { BsFillEyeFill } from 'react-icons/bs';
@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from '../config/config';
 import { userLogin } from "../redux/middleware/userauth";
+import { NavLink } from 'react-router-dom';
 
-function Loginscreen() {
+
+function LoginPage() {
 
   const dispatch = useDispatch();
 
@@ -48,7 +50,7 @@ function Loginscreen() {
   return (
     <>
         <Container fluid className='color-overlay d-flex justify-content-center align-items-center'> 
-            <Row className='shadow-lg jarak  bg-info sm'>
+            <Row className='shadow-lg jarak sm'>
               <h2>Joystay Login</h2>
 
           
@@ -75,14 +77,20 @@ function Loginscreen() {
                   </InputGroup>
                   </Form>
 
-                  
-                  
-                  
                   <Button className="mt-4" 
                   onClick={login}
                    bg={'#0095F6'} color={'white'} href="/">
                   Login
                   </Button>   
+
+                  <Nav className='justify-content-center mt-3 gap-0' >
+                    <Nav.Item>
+                      <Nav.Link  eventKey="disabled" disabled>Dont have an account?</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link href='/register'>Register</Nav.Link>
+                    </Nav.Item>
+                  </Nav>
                   
 
 
@@ -95,4 +103,4 @@ function Loginscreen() {
   );
 }
 
-export default Loginscreen;
+export default LoginPage;

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 
 
 
-function Registerscreen() {
+function RegisterPage() {
 
   
   YupPassword(Yup);
@@ -149,4 +149,4 @@ function Registerscreen() {
   );
 }
 
-export default Registerscreen;
+export default RegisterPage;

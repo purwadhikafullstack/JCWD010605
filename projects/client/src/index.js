@@ -10,6 +10,8 @@ import { Provider } from "react-redux";
 import AuthProvider from "./hoc/authProvider";
 import thunk from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
 
 const store = configureStore({ reducer: rootReducer, middleware: [thunk] });

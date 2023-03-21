@@ -1,12 +1,13 @@
-import Registerscreen from '../components/Registerscreen';
-import Loginscreen from '../components/Loginscreen';
+import RegisterPage from '../components/registersPage';
+import LoginPage from '../components/loginPage';
 import ListUser from '../components/listUser';
 import Landingpage from '../components/landingpage';
+import ProtectedPage from './protected';
 
 const routes = [
   {
     path: '/register',
-    element: <Registerscreen />,
+    element: <RegisterPage />,
   },
 
   {
@@ -16,12 +17,16 @@ const routes = [
 
   {
     path: '/login',
-    element: <Loginscreen />,
+    element: <LoginPage />,
   },
 
   {
     path: '/',
-    element: <Landingpage />,
+    element: 
+      // <ProtectedPage needLogin={true}>
+        <Landingpage />
+      // {/* </ProtectedPage> */}
+    
   },
 
   
