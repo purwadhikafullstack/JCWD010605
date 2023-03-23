@@ -6,6 +6,7 @@ import { BsFillEyeFill } from 'react-icons/bs';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from '../config/config';
+import user_types from "../redux/auth/types";
 import { userLogin } from "../redux/middleware/userauth";
 import { NavLink } from 'react-router-dom';
 
@@ -28,15 +29,44 @@ function LoginPage() {
   };
 
 
+  // async function login() {
+  //   return  await axiosInstance.get("/users", {params : user}).then((res) => {
+  //      res.data.length ? navigate("/",{ state : { user :res.data[0] } }) : setStatus(true)
+  //    })
+  //  }
 
   async function login() {
-    const isAuth = await dispatch(userLogin(user));
-    console.log(isAuth);
-    if (isAuth.status && isAuth.data.isVerify) {
-      return navigate("/", { state: { user: isAuth.data }, replace: true });
+    // send the data using req.body not req.params
+    const res =  await axiosInstance.post("/auth/login", user)
+    const userData = res.data.result
+
+    console.log(userData);
+    if(userData) 
+    //memilih state dengan user_types USER_LOGIN
+   { dispatch({
+        type: user_types.USER_LOGIN,
+        // data yg dikirim
+        payload: userData
+    })
+        
+    localStorage.setItem("user_data", JSON.stringify(userData))
+   return navigate("/",{ state : { user :res.data[0] }, replace: true }) 
+    
     }
-    return setStatus(true);
-  }
+  return  setStatus(true)
+    
+
+}
+
+
+  // async function login() {
+  //   const isAuth = await dispatch(userLogin(user));
+  //   console.log(isAuth);
+  //   if (isAuth.status && isAuth.data.isVerify) {
+  //     return navigate("/", { state: { user: isAuth.data }, replace: true });
+  //   }
+  //   return setStatus(true);
+  // }
 
   function inputHandler(event) {
     const { name, value } = event.target;
@@ -50,7 +80,7 @@ function LoginPage() {
   return (
     <>
         <Container fluid className='color-overlay d-flex justify-content-center align-items-center'> 
-            <Row className='shadow-lg jarak sm'>
+            <Row className='shadow-lg jarak sm' style={{width: '500px'}}>
               <h2>Joystay Login</h2>
 
           
@@ -75,13 +105,15 @@ function LoginPage() {
                       {passwordShown ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
                     </InputGroup.Text>
                   </InputGroup>
-                  </Form>
 
-                  <Button className="mt-4" 
+                  <Button className="mt-2" 
                   onClick={login}
                    bg={'#0095F6'} color={'white'} href="/">
                   Login
-                  </Button>   
+                  </Button>
+                  </Form>
+
+                     
 
                   <Nav className='justify-content-center mt-3 gap-0' >
                     <Nav.Item>

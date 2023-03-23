@@ -2,12 +2,18 @@ import RegisterPage from '../components/registersPage';
 import LoginPage from '../components/loginPage';
 import ListUser from '../components/listUser';
 import Landingpage from '../components/landingpage';
+import BookingList from '../components/bookinglist';
+import PropertyDetail from '../components/propertyDetail';
 import ProtectedPage from './protected';
 
 const routes = [
   {
     path: '/register',
-    element: <RegisterPage />,
+    element: (
+      <ProtectedPage guestOnly={true}>
+        <RegisterPage />,
+      </ProtectedPage>
+    ),
   },
 
   {
@@ -17,7 +23,11 @@ const routes = [
 
   {
     path: '/login',
-    element: <LoginPage />,
+    element: (
+      <ProtectedPage guestOnly={true}>
+        <LoginPage />,
+      </ProtectedPage>
+    ),
   },
 
   {
@@ -27,6 +37,18 @@ const routes = [
         <Landingpage />
       // {/* </ProtectedPage> */}
     
+  },
+  {
+    path: '/propertydetail/:id',
+    element: <PropertyDetail />,
+  },
+  {
+    path: '/bookinglist',
+    element: (
+      <ProtectedPage needLogin={true}>
+        <BookingList />,
+      </ProtectedPage>
+    )
   },
 
   

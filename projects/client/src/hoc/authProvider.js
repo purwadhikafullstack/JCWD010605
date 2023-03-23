@@ -6,40 +6,23 @@ import user_types from "../redux/auth/types";
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const fetchData = () => {
+    const savedDataUser = localStorage.getItem("user_data");
+    if (savedDataUser) {
+      const parseDataUser = JSON.parse(savedDataUser);
 
-  const fetchData = async () => {
-    const token = localStorage.getItem("token");
-    await axiosInstance
-      .post("/auth/keep", {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        console.log(res.data.result);
-        dispatch({
-          type: user_types.USER_LOGIN,
-          payload: res.data.result,
-        });
-      })
-      .catch((err) => {
-        if (err) {
-          if (token) localStorage.removeItem("token");
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
+      dispatch({
+        type: user_types.USER_LOGIN,
+        payload: parseDataUser,
       });
-    // console.log(savedDataUser);
-    // if (savedDataUser) {
-    //   // const parseDataUser = JSON.parse(savedDataUser);
-    // }
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return isLoading ? <Loading /> : children;
+  return children;
 };
 
 export default AuthProvider;

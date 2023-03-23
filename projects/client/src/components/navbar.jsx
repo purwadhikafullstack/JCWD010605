@@ -17,8 +17,8 @@ function NavbarTop() {
               <Nav.Link className="mx-2" href="#features">
                 Hotels
               </Nav.Link>
-              <Nav.Link className="mx-2" href="#pricing">
-                About
+              <Nav.Link className="mx-2" href="/bookinglist">
+                Bookling List
               </Nav.Link>
               <Nav.Link className="mx-2" href="#pricing">
                 About
