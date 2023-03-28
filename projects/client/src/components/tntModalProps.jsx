@@ -1,10 +1,11 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React from "react";
-import EditFormLocation from './tntEditLocation';
+import EditFormprops from './tntEditFormprops';
 
 
-export default function EditLocation(props) {
+
+export default function ModalProp(props) {
 
     return (
 
@@ -14,21 +15,20 @@ export default function EditLocation(props) {
 
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
-            centered >
-                
+            centered
+        >
             <Modal.Header closeButton style={{ background: '#f4ebd0' }}>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Edit Data
+                    Tambah Data
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Edit Data Kamar yang Ingin Diswewakan</h4>
-                <EditFormLocation />
+                <h4>Isi Data Kamar yang Ingin Diswewakan</h4>
+                <EditFormprops />
             </Modal.Body>
             {/* <Modal.Footer>
 
                 <Button variant='secondary' onClick={props.onHide}>Close</Button>
-                <button type="submit" class="btn btn-primary">Update</button>
 
             </Modal.Footer> */}
         </Modal>

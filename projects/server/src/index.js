@@ -36,7 +36,7 @@ app.get('/api', (req, res) => {
 //   } catch (err) {
 //     console.log(err)
 //   }
-  
+
 //   // res.json(result)
 //   res.send("Hello")
 // });

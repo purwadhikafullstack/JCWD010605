@@ -1,10 +1,10 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React from "react";
-import EditFormLocation from './tntEditLocation';
+import EditFormprops from './tntEditFormprops';
 
 
-export default function EditLocation(props) {
+export default function EditProps(props) {
 
     return (
 
@@ -23,7 +23,7 @@ export default function EditLocation(props) {
             </Modal.Header>
             <Modal.Body>
                 <h4>Edit Data Kamar yang Ingin Diswewakan</h4>
-                <EditFormLocation />
+                <EditFormprops />
             </Modal.Body>
             {/* <Modal.Footer>
 

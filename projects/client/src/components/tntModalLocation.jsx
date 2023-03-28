@@ -16,7 +16,7 @@ export default function ModalLocation(props) {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton className='bg-warning'>
+            <Modal.Header closeButton style={{ background: '#f4ebd0' }}>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Tambah Data
                 </Modal.Title>
@@ -25,12 +25,11 @@ export default function ModalLocation(props) {
                 <h4>Isi Data Kamar yang Ingin Diswewakan</h4>
                 <FormLocation />
             </Modal.Body>
-            <Modal.Footer>
+            {/* <Modal.Footer>
 
                 <Button variant='secondary' onClick={props.onHide}>Close</Button>
-                {/* <button type="submit" class="btn btn-primary">Submit</button> */}
 
-            </Modal.Footer>
+            </Modal.Footer> */}
         </Modal>
     );
 }
