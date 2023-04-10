@@ -1,17 +1,15 @@
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React from "react";
-import EditFormprops from './tntEditFormprops';
+import Formprops from './tntFormProps';
 
 
-
-export default function ModalProp(props) {
+export default function ModalProp({ show, onHide, setPropertys }) {
 
     return (
 
-
         <Modal
-            {...props}
+            show={show}
+            onHide={onHide}
 
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
@@ -24,13 +22,9 @@ export default function ModalProp(props) {
             </Modal.Header>
             <Modal.Body>
                 <h4>Isi Data Kamar yang Ingin Diswewakan</h4>
-                <EditFormprops />
+                <Formprops setPropertys={setPropertys} onHide={onHide}/>
             </Modal.Body>
-            {/* <Modal.Footer>
 
-                <Button variant='secondary' onClick={props.onHide}>Close</Button>
-
-            </Modal.Footer> */}
         </Modal>
     );
-}
+};

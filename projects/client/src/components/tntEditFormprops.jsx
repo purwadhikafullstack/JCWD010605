@@ -1,9 +1,27 @@
 import { Row, Col } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
+import { useState, useEffect, axiosInstance } from 'react';
 
 export default function EditFormprops(props) {
+    const [propertys, setPropertys] = useState([]);
+
+    const fetchPropertys = async () => {
+      try {
+        const { data } = await axiosInstance.get('./propertys')
+        setPropertys([...data.result])
+      } catch (error) {
+        console.log(error);
+      }
+  
+    };
+  
+    useEffect(() => {
+      fetchPropertys();
+    }, []);
 
     return (
+        <>
+
         <div className=" container mt-2" >
 
             <Row>
@@ -13,11 +31,9 @@ export default function EditFormprops(props) {
             </Row>
             <Row>
                 <Col>
+           
                     <form>
-                        {/* <div class="form-group">
-                            <label for="exampleInputEmail1">Nama</label>
-                            <input type="text" class="form-control" name='nama' />
-                        </div> */}
+                  
                         <div class="form-group">
                             <label >Nama</label>
                             <input type="text" class="form-control" />
@@ -30,25 +46,17 @@ export default function EditFormprops(props) {
                             <label for="formFile" class="form-label" className='mt-2'>Foto Kamar</label>
                             <input class="form-control" type="file" id="formFile" />
                         </div>
-                        <div>
-                            <select class="form-select" aria-label="Default select example">c
-                                <option selected>Pilih Tipe Kamar</option>
-                                <option value="1">VIP</option>
-                                <option value="2">Luxury</option>
-                                <option value="3">Standar</option>
-                            </select>
-                        </div>
                         <div class="form-group mt-3">
-                            {/* <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> */}
                             <Button className='mt-3' variant='secondary' onClick={props.onHide}>Close</Button>
                             &nbsp;
                             <button type="submit" class="btn btn-primary mt-3">Submit</button>
                         </div>
+                      
                     </form>
+                     
                 </Col>
             </Row>
-
-
         </div>
-    )
-}
+        </>
+    );
+};

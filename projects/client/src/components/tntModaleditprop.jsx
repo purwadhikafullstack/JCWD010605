@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React from "react";
 import EditFormprops from './tntEditFormprops';
@@ -8,14 +7,13 @@ export default function EditProps(props) {
 
     return (
 
-
         <Modal
             {...props}
 
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered >
-                
+
             <Modal.Header closeButton style={{ background: '#f4ebd0' }}>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Edit Data
@@ -25,12 +23,7 @@ export default function EditProps(props) {
                 <h4>Edit Data Kamar yang Ingin Diswewakan</h4>
                 <EditFormprops />
             </Modal.Body>
-            {/* <Modal.Footer>
 
-                <Button variant='secondary' onClick={props.onHide}>Close</Button>
-                <button type="submit" class="btn btn-primary">Update</button>
-
-            </Modal.Footer> */}
         </Modal>
     );
-}
+};

@@ -14,10 +14,6 @@ export default function EditFormLocation(props) {
             <Row>
                 <Col>
                     <form>
-                        {/* <div class="form-group">
-                            <label for="exampleInputEmail1">Nama</label>
-                            <input type="text" class="form-control" name='nama' />
-                        </div> */}
                         <div class="form-group">
                             <label >Kecamatan</label>
                             <input type="text" class="form-control" />
@@ -29,7 +25,6 @@ export default function EditFormLocation(props) {
                         <div class="form-group mt-3">
                             <label for="exampleFormControlTextarea1">Provinsi</label>
                             <input type="text" class="form-control" />
-                            {/* <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> */}
                             <Button className='mt-3' variant='secondary' onClick={props.onHide}>Close</Button>
                             &nbsp;
                             <button type="submit" class="btn btn-primary mt-3">Update</button>
@@ -37,8 +32,6 @@ export default function EditFormLocation(props) {
                     </form>
                 </Col>
             </Row>
-
-
         </div>
-    )
-}
+    );
+};

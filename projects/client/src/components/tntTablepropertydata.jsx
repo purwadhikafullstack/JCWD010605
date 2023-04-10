@@ -1,6 +1,5 @@
 import { Table } from "react-bootstrap"
 import ModalProp from "./tntModalProps";
-// import EditLocation from "./tntEditModal";
 import React, { Fragment } from "react";
 import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from "react";
@@ -12,7 +11,19 @@ export default function Tableproperty() {
 
   const [propertys, setPropertys] = useState([]);
 
+  const fetchPropertys = async () => {
+    try {
+      const { data } = await axiosInstance.get('/propertys')
+      setPropertys([...data.result])
+    } catch (error) {
+      console.log(error);
+    }
 
+  };
+
+  useEffect(() => {
+    fetchPropertys();
+  }, []);
 
   const [modalShow1, setModalShow1] = useState(false);
   const [modalShow2, setModalShow2] = useState(false);
@@ -20,13 +31,14 @@ export default function Tableproperty() {
   return (
     <>
       <NavbarTop />
-      <Button style={{ background: '#b68d40' }} className=" d-grid gap-2 col-6 mx-auto mt-4" onClick={() => setModalShow1(true)}>
+      <Button style={{ background: '#b68d40', border: 'none' }} className=" d-grid gap-2 col-6 mx-auto mt-4" onClick={() => setModalShow1(true)}>
         Tambah Data Properti
       </Button>
 
       <ModalProp
         show={modalShow1}
         onHide={() => setModalShow1(false)}
+        setPropertys={setPropertys}
       />
 
       <EditProps
@@ -40,40 +52,34 @@ export default function Tableproperty() {
 
             <thead style={{ background: '#f4ebd0' }}>
               <tr>
-                {/* <th>Nomor</th> */}
                 <th>Nama</th>
                 <th>Deskripsi</th>
                 <th>Gambar Hotel</th>
-                <th>Tipe</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {/* {propertys.map((item, index) => {
-                return ( */}
-                  <tr>
-                    <td>Hotel Beverly</td>
-                    <td>1 kingsize, ac, tv</td>
-                    <td>no Image</td>
-                    <td>VIP</td>
+              {propertys.map((item, index) => {
+                return (
+                  <tr key={item.id} style={{ textAlign: "center" }}>
+                    <td>{item.name}</td>
+                    <td>{item.description}</td>
+                    <td>
+                      <img style={{ objectFit: "cover", height: "50px" }} src={item.propertyImage} />
+                    </td>
                     <td>
                       <Button onClick={() => setModalShow2(true)}>Edit</Button>
                       &nbsp;
                       <Button variant="danger" onClick={() => (alert)}> Delete</Button>
                     </td>
                   </tr>
-                {/* )
+                )
               })
-              }; */}
-
+              };
             </tbody>
           </Table>
         </div>
       </Fragment>
-
-
     </>
-
-
   );
-}
+};

@@ -9,19 +9,19 @@ import NavbarTop from "./navbar"
 
 export default function Tableaja() {
 
-  const [propertys, setPropertys] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  const fetchPropertys = async () => {
-    await axiosInstance.get('/propertys').then((res) => {
+  const fetchCategories = async () => {
+    await axiosInstance.get('/categories').then((res) => {
       const datas = res.data.result;
 
-      setPropertys([...datas]);
+      setCategories([...datas]);
       console.log(datas);
     });
   };
 
   useEffect(() => {
-    fetchPropertys();
+    fetchCategories();
   }, []);
 
   const [modalShow1, setModalShow1] = useState(false);
@@ -30,7 +30,7 @@ export default function Tableaja() {
   return (
     <>
       <NavbarTop />
-      <Button style={{ background: '#b68d40' }} className=" d-grid gap-2 col-6 mx-auto mt-4" onClick={() => setModalShow1(true)}>
+      <Button style={{ background: '#b68d40', border: 'none' }} className=" d-grid gap-2 col-6 mx-auto mt-4" onClick={() => setModalShow1(true)}>
         Tambah Data Lokasi
       </Button>
 
@@ -50,7 +50,6 @@ export default function Tableaja() {
 
             <thead style={{ background: '#f4ebd0' }}>
               <tr>
-                <th>Nomor</th>
                 <th>Kecamatan</th>
                 <th>Kota/Kabupaten</th>
                 <th>Provinsi</th>
@@ -58,10 +57,9 @@ export default function Tableaja() {
               </tr>
             </thead>
             <tbody>
-              {propertys.map((item, index) => {
+              {categories.map((item, index) => {
                 return (
                   <tr key={item.id}>
-                    <td>{item.id}</td>
                     <td>{item.kecamatan}</td>
                     <td>{item.kabupaten}</td>
                     <td>{item.provinsi}</td>
@@ -79,10 +77,6 @@ export default function Tableaja() {
           </Table>
         </div>
       </Fragment>
-
-
     </>
-
-
   );
-}
+};

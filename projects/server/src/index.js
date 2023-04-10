@@ -15,42 +15,19 @@ app.use(
 app.use(express.json());
 
 //#region API ROUTES
-const { propertysRoute } = require('./routes');
+const { propertysRoute, categoriesRoute } = require('./routes');
 
 const db = require('./models');
 db.sequelize.sync({ alter: true });
 
 app.use('/propertys', propertysRoute);
+app.use('/categories', categoriesRoute)
 // ===========================
 // NOTE : Add your routes here
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`);
 });
-
-// app.get("/ambil", async (req, res) => {
-//   const sqlGet = "SELECT * FROM categories"
-//   let result
-//   try {
-//     result = await db.sequelize.query(sqlGet, { type: db.Sequelize.QueryTypes.SELECT })
-//   } catch (err) {
-//     console.log(err)
-//   }
-
-//   // res.json(result)
-//   res.send("Hello")
-// });
-
-// app.post("/post", (req, res) => {
-//   const { kecamatan, kabupaten, provinsi } = req.body;
-//   const sqlInsert = "INSERT INTO categories (kecamatan, kabupaten, provinsi) VALUES (?,?,?)"
-//   db.query(sqlGet, [kecamatan, kabupaten, provinsi],(error, result) => {
-//     if (error) {
-//       console.log(error);
-//     }
-//   })
-// });
-
 
 app.get('/api/greetings', (req, res, next) => {
   res.status(200).json({

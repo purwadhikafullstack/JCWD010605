@@ -60,7 +60,6 @@ export default function FormLocation(props) {
                                     class="form-control"
                                     value={provinsi}
                                     onChange={(e) => setProvinsi(e.target.value)} />
-                                {/* <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> */}
                                 <Button className='mt-3' variant='secondary' onClick={props.onHide}>Close</Button>
                                 &nbsp;
                                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -70,9 +69,7 @@ export default function FormLocation(props) {
                     </Col>
                 </Row>
 
-
-
             </div>
         </>
-    )
-}
+    );
+};

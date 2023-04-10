@@ -7,35 +7,30 @@ import Tableproperty from "../components/tntTablepropertydata";
 
 const routes = [
 
-    {
-        path: '/Location',
-        element: <Tableaja />
-    }, 
-    {
-        path: '/card',
-        element: <ItemCards />
-    },   
-    {
-        path: '/',
-        element: <LandingPage />,
-      },
-      {
-        path: '/propertydetail/:id',
-        element: <PropertyDetail />,
-      },
-      {
-        path: '/bookinglist/:id',
-        element: <BookingList />,
-      },
-      {
-        path : '/propertydata',
-        element: <Tableproperty/>
-      },
-
-    //   {
-    //     path: '/',
-    //     element: <LandingPage />,
-    //   },
+  {
+    path: '/Location',
+    element: <Tableaja />
+  },
+  {
+    path: '/card',
+    element: <ItemCards />
+  },
+  {
+    path: '/',
+    element: <LandingPage />,
+  },
+  {
+    path: '/propertydetail/:id',
+    element: <PropertyDetail />,
+  },
+  {
+    path: '/bookinglist/:id',
+    element: <BookingList />,
+  },
+  {
+    path: '/propertydata',
+    element: <Tableproperty />
+  },
 ];
 
 export default routes;

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { propertysController } = require('../controllers');
+const { getPropertys, addProperty } = require('../controllers/propertys');
 
-router.get('/', propertysController.getPropertys);
+router.get('/', getPropertys);
+router.post('/', addProperty)
 
 module.exports = router;
