@@ -50,7 +50,7 @@ export default function Formprops({ setPropertys, onHide }) {
                                 <input type="text" class={`form-control ${Boolean(touched.name && errors.name) && 'is-invalid'}`} {...getFieldProps("name")} />
                                 {Boolean(touched.name && errors.name) && (
                                     <div class="invalid-feedback">
-                                      {errors.name}
+                                        {errors.name}
                                     </div>
                                 )}
                             </div>
@@ -59,7 +59,7 @@ export default function Formprops({ setPropertys, onHide }) {
                                 <input type="text" class={`form-control ${Boolean(touched.description && errors.description) && 'is-invalid'}`} {...getFieldProps("description")} />
                                 {Boolean(touched.description && errors.description) && (
                                     <div class="invalid-feedback">
-                                      {errors.description}
+                                        {errors.description}
                                     </div>
                                 )}
                             </div>
