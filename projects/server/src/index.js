@@ -2,6 +2,10 @@ require('dotenv/config');
 const express = require('express');
 const cors = require('cors');
 const { join } = require('path');
+const schedule = require('node-schedule');
+const { checkTransactions } = require('./controllers/checker');
+
+schedule.scheduleJob('10 * * * * *', checkTransactions);
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -13,6 +17,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //#region API ROUTES
 const { propertysRoute, authRoute } = require('./routes');
@@ -22,6 +27,8 @@ const db = require('./models');
 
 app.use('/propertys', propertysRoute);
 app.use('/auth', authRoute);
+
+app.use('/payment_proof', express.static(`${__dirname}/public/PaymentProof/`));
 // ===========================
 // NOTE : Add your routes here
 

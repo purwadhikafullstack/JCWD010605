@@ -64,24 +64,22 @@ function LandingPage() {
           <Image alt="" src={Banner} className="px-0" style={{ height: '100vh', width: '100vw' }} />
           {/* <Col className="">1 of 1</Col> */}
 
-          <Col className="position-absolute rounded-2 p-3  shadow-sm top-0" style={{ marginTop: '100px', background: '#F4EBD0' }} md={{ span: 3, offset: 1 }}>
+          <Col xs={{ span: 8, offset: 1 }} sm={8} md={{ span: 6, offset: 1 }} lg={4} xl={4} className="position-absolute rounded-2 p-3  shadow-sm top-0" style={{ marginTop: '100px', background: '#F4EBD0' }}>
             {/* <LocationDate /> */}
 
             <RangeDate />
           </Col>
         </Row>
-        <Container className="d-flex  gap-4">
+        <Container className="">
           {/* {propertys.map((val, idx) => {
             return <CardProperty fetchdata={fetchPropertys} key={idx} data={{ ...val }} />;
           })} */}
-          {propertys.map((val, idx) => (
-            <Row key={idx} data={{ ...val }} xs={1} md={2} className="g-4">
-              {/* {Array.from({ length: 1 }).map((_, idx) => ( */}
-              <Col>
-                <Card className="" style={{ width: '16rem', cursor: 'pointer' }}>
-                  {/* <a href={`/propertydetail`}> */}
+          <Row xs={1} md={2} lg={3} xl={4} className="g-4">
+            {propertys.map((val, idx) => (
+              <Col key={idx} data={{ ...val }}>
+                <Card className="" style={{ cursor: 'pointer' }}>
                   <Link to={`/propertydetail/${val.id}`}>
-                    <Card.Img className="" variant="top" style={{ height: '16rem', objectFit: 'cover' }} src={val.propertyImage} />
+                    <Card.Img className="" variant="top" style={{ height: '14rem', objectFit: 'cover' }} src={val.propertyImage} />
                   </Link>
                   <Card.Body className="">
                     <Card.Title>{val.name}</Card.Title>
@@ -90,14 +88,10 @@ function LandingPage() {
                       {val.category?.kecamatan}, {val.category?.kabupaten}, {val.category?.provinsi}
                     </Card.Text>
                   </Card.Body>
-                  {/* </a> */}
-
-                  {/* {idx.category.provinsi} */}
-                  {/* <CardProperty/> */}
                 </Card>
               </Col>
-            </Row>
-          ))}
+            ))}
+          </Row>
 
           {/* <CardProperty /> */}
         </Container>

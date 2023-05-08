@@ -1,13 +1,18 @@
 const db = require('../models');
 const { Op } = require('sequelize');
+const fs = require('fs');
+const schedule = require('node-schedule');
+
 const propertys = db.propertys;
 const categories = db.categories;
 const fasilities = db.fasilities;
 const transaction = db.transaction;
 const rooms = db.rooms;
+const special_price = db.special_price;
+const available_date = db.available_date;
 const propertys_fasilities = db.propertys_fasilities;
 
-const { sequelize, special_price, available_date } = require('../models');
+const { sequelize } = require('../models');
 
 const propertysController = {
   getPropertys: async (req, res) => {
@@ -15,7 +20,13 @@ const propertysController = {
       const id = req.params.id;
 
       const result = await propertys.findAll({
-        attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
+        attributes: [
+          'id',
+          'name',
+          'description',
+          'propertyImage',
+          'categories_id',
+        ],
         include: [
           {
             model: categories,
@@ -63,7 +74,13 @@ const propertysController = {
       console.log(id);
 
       const result = await propertys.findAll({
-        attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
+        attributes: [
+          'id',
+          'name',
+          'description',
+          'propertyImage',
+          'categories_id',
+        ],
         include: [
           {
             model: fasilities,
@@ -79,7 +96,7 @@ const propertysController = {
           id: id,
         },
       });
-      console.log(result.dataValues);
+      // console.log(result.dataValues);
 
       return res.status(200).json({
         message: 'fetched data property detail',
@@ -176,10 +193,19 @@ const propertysController = {
     try {
       const id = req.params.id;
 
-      console.log(id);
+      // console.log(id);
 
       const result = await rooms.findAll({
-        attributes: ['id', 'name', 'description', 'roomImage', 'status', 'propertys_id', 'available_date_id', 'special_price_id'],
+        attributes: [
+          'id',
+          'name',
+          'description',
+          'roomImage',
+          'status',
+          'propertys_id',
+          'available_date_id',
+          'special_price_id',
+        ],
         include: [
           {
             model: special_price,
@@ -187,11 +213,24 @@ const propertysController = {
           },
           {
             model: available_date,
-            attributes: ['id', 'start_date', 'end_date', 'nama_kenaikan_harga', 'harga_kenaikan', 'status'],
+            attributes: [
+              'id',
+              'start_date',
+              'end_date',
+              'nama_kenaikan_harga',
+              'harga_kenaikan',
+              'status',
+            ],
           },
           {
             model: propertys,
-            attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
+            attributes: [
+              'id',
+              'name',
+              'description',
+              'propertyImage',
+              'categories_id',
+            ],
             where: {
               id: id,
             },
@@ -221,26 +260,39 @@ const propertysController = {
     }
   },
   addTransactionRoom: async (req, res) => {
-    // const t = await sequelize.transaction();
+    const t = await sequelize.transaction();
 
     try {
-      const { id } = req.body;
-      const data = { id };
+      const { room_id, order_status, tgl_checkin } = req.body;
 
-      console.log('request:', req.body);
+      // console.log('request:', req.body);
 
       const result = await transaction.create({
-        ...data,
+        room_id: room_id,
+        order_status: 'Menunggu Pembayaran',
+        tgl_checkin: tgl_checkin,
       });
 
-      // await t.commit();
+      await rooms.update(
+        {
+          status: 'Booked',
+        },
+        {
+          where: {
+            id: room_id,
+          },
+          transaction: t,
+        }
+      );
+
+      await t.commit();
 
       return res.status(201).json({
         message: 'new transaction added',
         result: result,
       });
     } catch (err) {
-      // await t.rollback();
+      await t.rollback();
 
       console.log(err);
       res.status(400).json({
@@ -253,14 +305,32 @@ const propertysController = {
     try {
       const id = req.params.id;
 
-      console.log(id);
+      // console.log(id);
 
       const result = await transaction.findAll({
-        attributes: ['id', 'tgl_checkin', 'tgl_checkout', 'bukti_pembayaran', 'order_status', 'users_id', 'reviews_id', 'room_id'],
+        attributes: [
+          'id',
+          'tgl_checkin',
+          'tgl_checkout',
+          'bukti_pembayaran',
+          'order_status',
+          'users_id',
+          'reviews_id',
+          'room_id',
+        ],
         include: [
           {
             model: rooms,
-            attributes: ['id', 'name', 'description', 'roomImage', 'status', 'propertys_id', 'available_date_id', 'special_price_id'],
+            attributes: [
+              'id',
+              'name',
+              'description',
+              'roomImage',
+              'status',
+              'propertys_id',
+              'available_date_id',
+              'special_price_id',
+            ],
             include: [
               {
                 model: special_price,
@@ -268,11 +338,24 @@ const propertysController = {
               },
               {
                 model: available_date,
-                attributes: ['id', 'start_date', 'end_date', 'nama_kenaikan_harga', 'harga_kenaikan', 'status'],
+                attributes: [
+                  'id',
+                  'start_date',
+                  'end_date',
+                  'nama_kenaikan_harga',
+                  'harga_kenaikan',
+                  'status',
+                ],
               },
               {
                 model: propertys,
-                attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
+                attributes: [
+                  'id',
+                  'name',
+                  'description',
+                  'propertyImage',
+                  'categories_id',
+                ],
 
                 include: [
                   {
@@ -298,6 +381,178 @@ const propertysController = {
       });
     }
   },
+
+  cancelTransaction: async (req, res) => {
+    const { room_id } = req.body;
+    try {
+      // console.log('request:', req.body);
+      const t = await sequelize.transaction();
+
+      await transaction.update(
+        {
+          order_status: 'Dibatalkan',
+        },
+        {
+          where: { room_id },
+          transaction: t,
+        }
+      );
+
+      // Update the room
+      await rooms.update(
+        {
+          status: 'Available',
+        },
+        {
+          where: { id: room_id },
+          transaction: t,
+        }
+      );
+
+      // Commit the transaction
+      await t.commit();
+
+      return res.status(201).json({
+        message: 'Transaction cancelled successfully',
+      });
+    } catch (err) {
+      await t.rollback();
+
+      console.log(err);
+      res.status(400).json({
+        message: err,
+      });
+    }
+  },
+
+  testPay: async (req, res) => {
+    const { room_id } = req.body;
+    const imagePath = '/PaymentProof/';
+    const image_url = imagePath + req.file.filename;
+    const t = await sequelize.transaction();
+    try {
+      console.log(req.file.filename);
+      const transactionRecord = await transaction.findOne({
+        where: {
+          room_id: room_id,
+          order_status: 'Menunggu Pembayaran',
+        },
+        transaction: t,
+      });
+      console.log(transactionRecord);
+
+      if (!transactionRecord) {
+        return res.status(404).json({
+          message: 'Transaction record not found',
+        });
+      }
+
+      // Remove previous image if it exists
+      if (transactionRecord.bukti_pembayaran) {
+        fs.unlinkSync(
+          `${__dirname}/../public${transactionRecord.bukti_pembayaran}`
+        );
+      }
+
+      const result = await transaction.update(
+        {
+          bukti_pembayaran: image_url,
+          order_status: 'Menunggu Konfirmasi Pembayaran',
+        },
+        {
+          where: {
+            room_id: room_id,
+            order_status: 'Menunggu Pembayaran',
+          },
+          transaction: t,
+        }
+      );
+
+      await t.commit();
+
+      return res.status(201).json({
+        message: 'Payment proof uploaded successfully',
+        result: result,
+      });
+    } catch (err) {
+      await t.rollback();
+
+      console.log(err);
+      res.status(400).json({
+        message: err,
+      });
+    }
+  },
+
+  // twoHourCancellation: async (req, res) => {
+  //   const { room_id } = req.body;
+
+  //   const t = await sequelize.transaction();
+  //   try {
+  //     const transactionRecord = await transaction.findOne({
+  //       where: {
+  //         room_id: room_id,
+  //         order_status: 'Menunggu Pembayaran',
+  //       },
+  //       transaction: t,
+  //     });
+  //     console.log(transactionRecord);
+
+  //     if (!transactionRecord) {
+  //       return res.status(404).json({
+  //         message: 'Transaction record not found',
+  //       });
+  //     }
+
+  //     // Schedule a task to cancel the transaction if payment proof is not uploaded within 2 hours
+  //     const job = schedule.scheduleJob('20 * * * * *', async () => {
+  //       if (!transactionRecord.bukti_pembayaran) {
+  //         // Cancel the transaction
+  //         await transaction.update(
+  //           {
+  //             order_status: 'Dibatalkan',
+  //           },
+  //           {
+  //             where: { room_id },
+  //             transaction: t,
+  //           }
+  //         );
+
+  //         // Update the room
+  //         await rooms.update(
+  //           {
+  //             status: 'Available',
+  //           },
+  //           {
+  //             where: { id: room_id },
+  //             transaction: t,
+  //           }
+  //         );
+
+  //         // Commit the transaction
+  //         await t.commit();
+  //       }
+  //     });
+
+  //     // When the payment proof is uploaded, cancel the scheduled task
+  //     if (transactionRecord.bukti_pembayaran) {
+  //       job.cancel();
+  //     }
+
+  //     await t.commit();
+
+  //     return res.status(201).json({
+  //       message: 'Payment cancelled',
+  //     });
+  //   } catch (err) {
+  //     await t.rollback();
+
+  //     console.log(err);
+  //     res.status(400).json({
+  //       message: err,
+  //     });
+  //   }
+  // },
 };
 
 module.exports = propertysController;

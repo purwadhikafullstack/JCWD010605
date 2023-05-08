@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       tgl_checkout: DataTypes.STRING,
       bukti_pembayaran: DataTypes.STRING,
       order_status: DataTypes.STRING,
+      payment_deadline: DataTypes.DATE,
       users_id: DataTypes.INTEGER,
       reviews_id: DataTypes.INTEGER,
       room_id: DataTypes.INTEGER,
