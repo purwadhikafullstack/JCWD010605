@@ -112,8 +112,6 @@ export default function BookingList() {
       });
   };
 
- 
-
   const cancelBook = async (room_id) => {
     const confirmCancelation = window.confirm(
       'Are you sure you want to cancel booking?'
@@ -156,6 +154,7 @@ export default function BookingList() {
 
         <Modal.Body>
           <div className="text-danger">{formik.errors.image_url}</div>
+
           <input type="file" onChange={handleFile} />
           <img
             src={formik.values.image_preview}
@@ -172,7 +171,7 @@ export default function BookingList() {
           </Button>
         </Modal.Footer>
       </Modal>
-      z
+
       <Container>
         <Row className="mt-5 mb-4 text-center">
           <Col>

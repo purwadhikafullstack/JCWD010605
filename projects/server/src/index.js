@@ -5,7 +5,7 @@ const { join } = require('path');
 const schedule = require('node-schedule');
 const { checkTransactions } = require('./controllers/checker');
 
-schedule.scheduleJob('10 * * * * *', checkTransactions);
+schedule.scheduleJob('* /5 * * * *', checkTransactions);
 
 const PORT = process.env.PORT || 8000;
 const app = express();

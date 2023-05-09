@@ -1,7 +1,6 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const fs = require('fs');
-const schedule = require('node-schedule');
 
 const propertys = db.propertys;
 const categories = db.categories;
@@ -110,84 +109,6 @@ const propertysController = {
       });
     }
   },
-
-  // getRooms: async (req, res) => {
-  //   try {
-  //     const id = req.params.id;
-
-  //     console.log(id);
-
-  //     const result = await rooms.findAll({
-  //       attributes: ['id', 'name', 'description', 'roomImage', 'status', 'propertys_id', 'available_date_id', 'special_price_id'],
-  //       include: [
-  //         {
-  //           model: propertys,
-  //           attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
-  //           include: [
-  //             {
-  //               model: categories,
-  //               attributes: ['id', 'provinsi', 'kabupaten', 'kecamatan'],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       group: ['propertys_id'],
-  //     });
-  //     console.log(result.dataValues);
-
-  //     return res.status(200).json({
-  //       message: 'fetched data property detail',
-  //       result: result,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-
-  //     return res.status(400).json({
-  //       message: err,
-  //     });
-  //   }
-  // },
-
-  // getPropertyDetail: async (req, res) => {
-  //   try {
-  //     const id = req.params.id;
-
-  //     console.log(id);
-
-  //     const result = await rooms.findAll({
-  //       attributes: ['id', 'name', 'description', 'roomImage', 'status', 'propertys_id', 'available_date_id', 'special_price_id'],
-  //       include: [
-  //         {
-  //           model: propertys,
-  //           attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
-  //           where: {
-  //             id: id,
-  //           },
-
-  //           include: [
-  //             {
-  //               model: categories,
-  //               attributes: ['id', 'provinsi', 'kabupaten', 'kecamatan'],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       // group: ['propertys_id'],
-  //     });
-  //     // console.log(result.dataValues);
-
-  //     return res.status(200).json({
-  //       message: 'fetched data property detail',
-  //       result: result,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-
-  //     return res.status(400).json({
-  //       message: err,
-  //     });
-  //   }
-  // },
 
   getRoomsDetail: async (req, res) => {
     try {
@@ -435,7 +356,10 @@ const propertysController = {
       const transactionRecord = await transaction.findOne({
         where: {
           room_id: room_id,
-          order_status: 'Menunggu Pembayaran',
+          [Op.or]: [
+            { order_status: 'Menunggu Pembayaran' },
+            { order_status: 'Menunggu Konfirmasi Pembayaran' },
+          ],
         },
         transaction: t,
       });
@@ -462,7 +386,10 @@ const propertysController = {
         {
           where: {
             room_id: room_id,
-            order_status: 'Menunggu Pembayaran',
+            [Op.or]: [
+              { order_status: 'Menunggu Pembayaran' },
+              { order_status: 'Menunggu Konfirmasi Pembayaran' },
+            ],
           },
           transaction: t,
         }
@@ -484,75 +411,47 @@ const propertysController = {
     }
   },
 
-  // twoHourCancellation: async (req, res) => {
-  //   const { room_id } = req.body;
+  addPropertys: async (req, res) => {
+    const t = await sequelize.transaction();
 
-  //   const t = await sequelize.transaction();
-  //   try {
-  //     const transactionRecord = await transaction.findOne({
-  //       where: {
-  //         room_id: room_id,
-  //         order_status: 'Menunggu Pembayaran',
-  //       },
-  //       transaction: t,
-  //     });
-  //     console.log(transactionRecord);
+    try {
+      const { room_id, order_status, tgl_checkin } = req.body;
 
-  //     if (!transactionRecord) {
-  //       return res.status(404).json({
-  //         message: 'Transaction record not found',
-  //       });
-  //     }
+      // console.log('request:', req.body);
 
-  //     // Schedule a task to cancel the transaction if payment proof is not uploaded within 2 hours
-  //     const job = schedule.scheduleJob('20 * * * * *', async () => {
-  //       if (!transactionRecord.bukti_pembayaran) {
-  //         // Cancel the transaction
-  //         await transaction.update(
-  //           {
-  //             order_status: 'Dibatalkan',
-  //           },
-  //           {
-  //             where: { room_id },
-  //             transaction: t,
-  //           }
-  //         );
+      const result = await transaction.create({
+        room_id: room_id,
+        order_status: 'Menunggu Pembayaran',
+        tgl_checkin: tgl_checkin,
+      });
 
-  //         // Update the room
-  //         await rooms.update(
-  //           {
-  //             status: 'Available',
-  //           },
-  //           {
-  //             where: { id: room_id },
-  //             transaction: t,
-  //           }
-  //         );
+      await rooms.update(
+        {
+          status: 'Booked',
+        },
+        {
+          where: {
+            id: room_id,
+          },
+          transaction: t,
+        }
+      );
 
-  //         // Commit the transaction
-  //         await t.commit();
-  //       }
-  //     });
+      await t.commit();
 
-  //     // When the payment proof is uploaded, cancel the scheduled task
-  //     if (transactionRecord.bukti_pembayaran) {
-  //       job.cancel();
-  //     }
+      return res.status(201).json({
+        message: 'new transaction added',
+        result: result,
+      });
+    } catch (err) {
+      await t.rollback();
 
-  //     await t.commit();
-
-  //     return res.status(201).json({
-  //       message: 'Payment cancelled',
-  //     });
-  //   } catch (err) {
-  //     await t.rollback();
-
-  //     console.log(err);
-  //     res.status(400).json({
-  //       message: err,
-  //     });
-  //   }
-  // },
+      console.log(err);
+      res.status(400).json({
+        message: err,
+      });
+    }
+  },
 };
 
 module.exports = propertysController;
