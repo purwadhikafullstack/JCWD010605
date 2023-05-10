@@ -49,7 +49,7 @@ function LoginPage() {
         payload: userData
     })
         
-    localStorage.setItem("user_data", JSON.stringify(userData))
+    localStorage.setItem("token", userData.token)
    return navigate("/",{ state : { user :res.data[0] }, replace: true }) 
     
     }
@@ -108,7 +108,7 @@ function LoginPage() {
 
                   <Button className="mt-2" 
                   onClick={login}
-                   bg={'#0095F6'} color={'white'} href="/">
+                  style={{ background: '#f4ebd0', color: 'black', borderStyle:'none' }} >
                   Login
                   </Button>
                   </Form>

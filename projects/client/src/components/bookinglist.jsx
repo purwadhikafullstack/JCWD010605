@@ -20,6 +20,8 @@ export default function BookingList() {
         console.log(error);
       });
   };
+  const contoh = localStorage.getItem("token")
+  console.log(contoh);
 
   useEffect(() => {
     fetchBookingList();

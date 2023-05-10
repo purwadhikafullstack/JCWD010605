@@ -40,6 +40,7 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.users = require('./users')(sequelize, Sequelize);
+db.tenant = require('./tenant')(sequelize, Sequelize);
 db.propertys = require('./propertys')(sequelize, Sequelize);
 db.categories = require('./categories')(sequelize, Sequelize);
 db.fasilities = require('./fasilities')(sequelize, Sequelize);
@@ -47,6 +48,7 @@ db.rooms = require('./rooms')(sequelize, Sequelize);
 db.special_price = require('./special_price')(sequelize, Sequelize);
 db.available_date = require('./available_date')(sequelize, Sequelize);
 
+db.users.belongsTo(db.tenant, {foreignKey: 'users_id'})
 db.propertys.belongsTo(db.categories, { foreignKey: 'categories_id' });
 db.rooms.belongsTo(db.propertys, { foreignKey: 'propertys_id' });
 db.rooms.belongsTo(db.special_price, { foreignKey: 'special_price_id' });

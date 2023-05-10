@@ -134,7 +134,7 @@ function RegisterPage() {
                   </InputGroup>
                     {formik.errors.phone_number}
                   </Form>
-                  <Button className="mt-4" onClick={formik.handleSubmit}  bg={'#0095F6'} color={'white'}  >
+                  <Button className="mt-4" onClick={formik.handleSubmit}  style={{ background: '#f4ebd0', color: 'black', borderStyle:'none' }}  >
                   Register
                   </Button>
                   

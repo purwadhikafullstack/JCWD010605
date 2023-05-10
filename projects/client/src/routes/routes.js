@@ -5,6 +5,10 @@ import Landingpage from '../components/landingpage';
 import BookingList from '../components/bookinglist';
 import PropertyDetail from '../components/propertyDetail';
 import ProtectedPage from './protected';
+import ChangePassword from '../components/changePassword';
+import Notfound from '../components/notFound';
+import Tableaja from "../components/tntTableLocation";
+import RegisterTenantForm from '../components/registerTenant';
 
 const routes = [
   {
@@ -14,6 +18,16 @@ const routes = [
         <RegisterPage />,
       </ProtectedPage>
     ),
+  },
+
+  {
+    path: '/registertenant',
+    element : <RegisterTenantForm />
+  },
+
+  {
+    path: '/Location',
+    element: <Tableaja />
   },
 
   {
@@ -49,6 +63,15 @@ const routes = [
         <BookingList />,
       </ProtectedPage>
     )
+  },
+  {
+    path: '/change',
+    element: <ChangePassword />,
+  },
+
+  {
+    path: '/notfound',
+    element: <Notfound/>,
   },
 
   

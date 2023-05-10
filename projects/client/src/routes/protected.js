@@ -15,7 +15,7 @@ function ProtectedPage({
   useEffect(() => {
     //wajib login
     if (needLogin && !userSelector?.id) {
-      return navigate("/login", { replace: true });
+      return navigate("/notfound", { replace: true });
     }
 
     //guest only, ga boleh login

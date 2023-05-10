@@ -1,16 +1,44 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import routes from './routes/routes';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { axiosInstance } from './config/config';
+import user_types from './redux/auth/types';
+import { useDispatch } from 'react-redux';
+// import user_types from "../redux/auth/types";
+// import { keeplogin } from '../../server/src/controllers/auth'
 
 function App() {
   // const [message, setMessage] = useState('');
+  const dispatch = useDispatch()
+  const keeplogin = async() => {
+    try {
+      const token = localStorage.getItem('token')
+      const user = await axiosInstance.get('/auth/keeplogin', {
+        headers: { Authorization: `Bearer ${token}` }
+          
+      })
+      const userData = user.data.result
+      if(userData) 
+      //memilih state dengan user_types USER_LOGIN
+      
+     { dispatch({
+      
+          type: user_types.USER_LOGIN,
+          // data yg dikirim
+          payload: userData
+      })}
+    } catch (error) {
+      console.log(error);
+    }
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { data } = await axios.get(${process.env.REACT_APP_API_BASE_URL}/greetings);
-  //     setMessage(data?.message || '');
-  //   })();
-  // }, []);
+  }
+  useEffect(() => {
+    keeplogin()
+  }, [])
+
+  
   return (
     <Routes key={'route'}>
       {routes.map((val, key) => {
