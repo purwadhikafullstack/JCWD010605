@@ -2,21 +2,31 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import Logo from '../img/jgreen.png';
 import '../css/style.css';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import user_types from '../redux/auth/types';
+
 
 
 
 function NavbarTop() {
 
+  const dispatch = useDispatch()
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const auth = useSelector((state) => state.auth) 
   console.log(auth);
 
-  const handleLogout = () => {
+  // const logOut = () => {
     
+    
+  // };
+  function logOut() {
     setIsLoggedIn(false);
-  };
-  
+    dispatch({
+      type: user_types.USER_LOGOUT,
+    });
+    localStorage.clear();
+    // window.location.reload(true);
+  }
 
   
   return (
@@ -48,7 +58,7 @@ function NavbarTop() {
             <Nav className="gap-2">
               {auth.email ? (
                 <>
-                  <Button size="sm" className="rounded-2" variant="light" id="btn-nav-tan" onClick={handleLogout}>
+                  <Button size="sm" className="rounded-2" variant="light" id="btn-nav-tan" onClick={logOut}>
                     Logout
                   </Button>
                 </>

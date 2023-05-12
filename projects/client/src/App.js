@@ -11,32 +11,35 @@ import { useDispatch } from 'react-redux';
 
 function App() {
   // const [message, setMessage] = useState('');
-  const dispatch = useDispatch()
-  const keeplogin = async() => {
-    try {
-      const token = localStorage.getItem('token')
-      const user = await axiosInstance.get('/auth/keeplogin', {
-        headers: { Authorization: `Bearer ${token}` }
-          
-      })
-      const userData = user.data.result
-      if(userData) 
-      //memilih state dengan user_types USER_LOGIN
-      
-     { dispatch({
-      
-          type: user_types.USER_LOGIN,
-          // data yg dikirim
-          payload: userData
-      })}
-    } catch (error) {
-      console.log(error);
+  const dispatch = useDispatch();
+const keeplogin = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const user = await axiosInstance.get('/auth/keeplogin', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const userData = user.data.result;
+    if (userData) {
+      dispatch({
+        type: user_types.USER_LOGIN,
+        payload: userData
+      });
     }
-
+  } catch (error) {
+    console.log(error);
+    localStorage.removeItem('token');
   }
-  useEffect(() => {
-    keeplogin()
-  }, [])
+};
+
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    keeplogin();
+  } else {
+    // Handle case when there is no token available
+  }
+}, []);
+
 
   
   return (
