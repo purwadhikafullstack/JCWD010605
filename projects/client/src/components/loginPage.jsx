@@ -36,24 +36,30 @@ function LoginPage() {
   //  }
 
   async function login() {
-    // send the data using req.body not req.params
-    const res =  await axiosInstance.post("/auth/login", user)
-    const userData = res.data.result
-
-    console.log(userData);
-    if(userData) 
-    //memilih state dengan user_types USER_LOGIN
-   { dispatch({
-        type: user_types.USER_LOGIN,
-        // data yg dikirim
-        payload: userData
-    })
-        
-    localStorage.setItem("token", userData.token)
-   return navigate("/",{ state : { user :res.data[0] }, replace: true }) 
-    
+    try {
+      const res =  await axiosInstance.post("/auth/login", user)
+      const userData = res.data.result
+  
+      console.log(userData);
+      if(userData) 
+      //memilih state dengan user_types USER_LOGIN
+     { dispatch({
+          type: user_types.USER_LOGIN,
+          // data yg dikirim
+          payload: userData.result
+      })
+          
+      localStorage.setItem("token", userData.token)
+      navigate("/") 
+      
+      }
+      
+    } catch (error) {
+      console.log(error);
+      
     }
-  return  setStatus(true)
+    // send the data using req.body not req.params
+   
     
 
 }

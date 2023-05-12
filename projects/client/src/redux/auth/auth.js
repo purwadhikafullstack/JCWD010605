@@ -13,7 +13,7 @@ function userReducer(state = init_state, action) {
   //akan mempengaruhi state
   //if direction === "login"
   //username => username dari data kita
-
+console.log(action.payload);
   if (action.type === user_types.USER_LOGIN) {
     return {
       ...state,

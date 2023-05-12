@@ -15,6 +15,7 @@ function App() {
 const keeplogin = async () => {
   try {
     const token = localStorage.getItem('token');
+    console.log(token);
     const user = await axiosInstance.get('/auth/keeplogin', {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -30,6 +31,7 @@ const keeplogin = async () => {
     localStorage.removeItem('token');
   }
 };
+
 
 useEffect(() => {
   const token = localStorage.getItem('token');
