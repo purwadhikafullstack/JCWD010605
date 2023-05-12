@@ -29,11 +29,9 @@ app.use('/auth', authRoute);
 app.use('/propertys', propertysRoute);
 app.use('/categories', categoriesRoute)
 
-const db = require('./models');
 // db.sequelize.sync({ alter: true });
 
-app.use('/propertys', propertysRoute);
-app.use('/auth', authRoute);
+
 
 app.use('/payment_proof', express.static(`${__dirname}/public/PaymentProof/`));
 // ===========================

@@ -6,6 +6,7 @@ const init_state = {
   name: "",
   description: "",
   email: "",
+  checked: false
 };
 
 function userReducer(state = init_state, action) {
@@ -20,9 +21,12 @@ console.log(action.payload);
       avatar_url: action.payload.avatar_url,
       name: action.payload.name,
       description: action.payload.description,
-    };
+      checked: false
+    }; 
   } else if (action.type === user_types.USER_LOGOUT) {
     return init_state;
+  } else if (action.type === user_types.USER_CHECKED) {
+    return {...state, checked: true}
   }
   return state;
 }

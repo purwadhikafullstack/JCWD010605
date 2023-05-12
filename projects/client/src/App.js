@@ -13,8 +13,8 @@ function App() {
   const dispatch = useDispatch();
 const keeplogin = async () => {
   try {
+    dispatch({type: user_types.USER_CHECKED})
     const token = localStorage.getItem('token');
-    console.log(token);
     const user = await axiosInstance.get('/auth/keeplogin', {
       headers: { Authorization: `Bearer ${token}` }
     });

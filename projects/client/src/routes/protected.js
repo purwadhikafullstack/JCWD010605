@@ -13,14 +13,17 @@ function ProtectedPage({
   console.log(userSelector.id);
 
   useEffect(() => {
-    if (needLogin && !userSelector?.id) {
+  if (userSelector.checked) {
+    if (needLogin && userSelector?.id) {
       return navigate("/notfound", { replace: true });
-    }
+  }
+  if (guestOnly && userSelector.id) {
+    return navigate("/", { replace: true });
+  }
+  }
 
-    if (guestOnly && userSelector.id) {
-      return navigate("/", { replace: true });
-    }
-  }, []);
+      
+  }, [userSelector.checked]);
   return children;
 }
 

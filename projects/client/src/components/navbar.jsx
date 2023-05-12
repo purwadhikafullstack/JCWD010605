@@ -4,6 +4,7 @@ import '../css/style.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import user_types from '../redux/auth/types';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 function NavbarTop() {
 
@@ -31,33 +32,34 @@ function NavbarTop() {
           <Navbar.Collapse id="responsive-navbar-nav ">
             <hr />
             <Nav className="me-auto ms-3">
-              <Nav.Link className="mx-2" href="#features">
+              <Link id="btn-nav-left" className="mx-2" to="#features">
                 Hotels
-              </Nav.Link>
-              <Nav.Link className="mx-2" href="/bookinglist">
+              </Link>
+              
+                <Link id="btn-nav-left" className="mx-2" to={auth.email? "/bookinglist": "/notfound"}>
                 Booking List
-              </Nav.Link>
-              <Nav.Link className="mx-2" href="#pricing">
+              </Link>
+
+              <Link id="btn-nav-left" className="mx-2" href="#pricing">
                 About
-              </Nav.Link>
-              <Nav.Link className="mx-2" href="#pricing">
+              </Link>
+              <Link id="btn-nav-left" className="mx-2" href="#pricing">
                 About
-              </Nav.Link>
-              <Nav.Link className="mx-2" href="#pricing">
+              </Link>
+              <Link id="btn-nav-left" className="mx-2" href="#pricing">
                 About
-              </Nav.Link>
-              {auth.email && (
-                <Nav.Link className="mx-2" href="#profile">
-                  Profile
-                </Nav.Link>
-              )}
+              </Link>
+             
             </Nav>
             <Nav className="gap-2">
               {auth.email ? (
                 <>
-                  <Button size="sm" className="rounded-2" variant="light" id="btn-nav-tan" onClick={logOut}>
+                 <Link id="btn-nav-left" className="mx-2" href="#profile">
+                  Profile
+                </Link>
+                  <Link size="sm" className="rounded-2" to="/" variant="light" id="btn-nav-left" onClick={logOut}>
                     Logout
-                  </Button>
+                  </Link>
                 </>
               ) : (
                 <>
