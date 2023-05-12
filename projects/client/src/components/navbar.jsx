@@ -1,4 +1,4 @@
-import { Container, Navbar, Nav, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, NavLink } from 'react-bootstrap';
 import Logo from '../img/jgreen.png';
 import '../css/style.css';
 import { useState } from 'react';
@@ -36,6 +36,12 @@ function NavbarTop() {
               </Nav.Link>
               <Nav.Link className="mx-2" href="/bookinglist">
                 Booking List
+              </Nav.Link>
+              <Nav.Link className="mx-2" href="#pricing">
+                About
+              </Nav.Link>
+              <Nav.Link className="mx-2" href="#pricing">
+                About
               </Nav.Link>
               <Nav.Link className="mx-2" href="#pricing">
                 About
