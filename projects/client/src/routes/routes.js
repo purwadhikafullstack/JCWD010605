@@ -7,7 +7,6 @@ import PropertyDetail from '../components/propertyDetail';
 import ProtectedPage from './protected';
 import ChangePassword from '../components/changePassword';
 import Notfound from '../components/notFound';
-import Tableaja from "../components/tntTableLocation";
 import RegisterTenantForm from '../components/registerTenant';
 
 const routes = [
@@ -25,10 +24,6 @@ const routes = [
     element : <RegisterTenantForm />
   },
 
-  {
-    path: '/Location',
-    element: <Tableaja />
-  },
 
   {
     path: '/listuser',
@@ -47,9 +42,8 @@ const routes = [
   {
     path: '/',
     element: 
-      // <ProtectedPage needLogin={true}>
         <Landingpage />
-      // {/* </ProtectedPage> */}
+      
     
   },
   {

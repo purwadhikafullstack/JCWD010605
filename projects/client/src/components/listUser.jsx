@@ -10,7 +10,6 @@ export default function ListUser () {
 
     const fetchUsers = async () => {
         await axiosInstance.get('/auth').then((res) => {
-          // console.log(res.data.result);
           const datas = res.data.result;
     
           setUsers([...datas]);

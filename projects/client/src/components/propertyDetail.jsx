@@ -72,8 +72,7 @@ export default function PropertyDetail() {
                 ) : (
                   <p>Please select room</p>
                 )}
-                {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-                <Card.Text>Some quick example text to build on the card title and make up the bulk of the card's content.</Card.Text> */}
+
                 <Button>Book Now</Button>
               </Card.Body>
             </Card>
@@ -83,7 +82,6 @@ export default function PropertyDetail() {
             <Row className="mt-5">
               <Col md={8} className="">
                 <h4>{detail.name}</h4>
-                {/* <i>Icon Fasilitas</i> */}
                 <p>
                   {detail.description}
                   <br />

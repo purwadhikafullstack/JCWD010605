@@ -9,10 +9,7 @@ const init_state = {
 };
 
 function userReducer(state = init_state, action) {
-  //kumpulan action
-  //akan mempengaruhi state
-  //if direction === "login"
-  //username => username dari data kita
+
 console.log(action.payload);
   if (action.type === user_types.USER_LOGIN) {
     return {
@@ -31,7 +28,3 @@ console.log(action.payload);
 }
 
 export default userReducer;
-
-// npm i @reduxjs/toolkit
-// npm i react-redux
-//npm i redux

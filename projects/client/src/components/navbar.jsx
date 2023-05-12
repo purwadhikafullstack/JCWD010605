@@ -5,9 +5,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import user_types from '../redux/auth/types';
 
-
-
-
 function NavbarTop() {
 
   const dispatch = useDispatch()
@@ -15,20 +12,14 @@ function NavbarTop() {
   const auth = useSelector((state) => state.auth) 
   console.log(auth);
 
-  // const logOut = () => {
-    
-    
-  // };
   function logOut() {
     setIsLoggedIn(false);
     dispatch({
       type: user_types.USER_LOGOUT,
     });
     localStorage.clear();
-    // window.location.reload(true);
   }
-
-  
+ 
   return (
     <>
       <Navbar collapseOnSelect className="border-bottom border-1" expand="lg" sticky="top" style={{ background: '#F4EBD0' }} variant="light">

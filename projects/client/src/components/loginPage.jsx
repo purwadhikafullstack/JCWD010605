@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, FloatingLabel, InputGroup, Row, Nav } from 'react-bootstrap';
-// import '../css/Loginscreen.css';
 import { BsFillEyeSlashFill } from 'react-icons/bs';
 import { BsFillEyeFill } from 'react-icons/bs';
 import { useNavigate } from "react-router-dom";
@@ -29,12 +28,6 @@ function LoginPage() {
   };
 
 
-  // async function login() {
-  //   return  await axiosInstance.get("/users", {params : user}).then((res) => {
-  //      res.data.length ? navigate("/",{ state : { user :res.data[0] } }) : setStatus(true)
-  //    })
-  //  }
-
   async function login() {
     try {
       const res =  await axiosInstance.post("/auth/login", user)
@@ -42,58 +35,36 @@ function LoginPage() {
   
       console.log(userData);
       if(userData) 
-      //memilih state dengan user_types USER_LOGIN
      { dispatch({
           type: user_types.USER_LOGIN,
-          // data yg dikirim
           payload: userData.result
       })
           
       localStorage.setItem("token", userData.token)
-      navigate("/") 
-      
+      navigate("/")  
       }
       
     } catch (error) {
-      console.log(error);
-      
+      console.log(error);     
     }
-    // send the data using req.body not req.params
-   
-    
-
 }
-
-
-  // async function login() {
-  //   const isAuth = await dispatch(userLogin(user));
-  //   console.log(isAuth);
-  //   if (isAuth.status && isAuth.data.isVerify) {
-  //     return navigate("/", { state: { user: isAuth.data }, replace: true });
-  //   }
-  //   return setStatus(true);
-  // }
 
   function inputHandler(event) {
     const { name, value } = event.target;
-
     setUser({
       ...user,
       [name]: value,
     });
-  }
-  
+  }  
   return (
     <>
         <Container fluid className='color-overlay d-flex justify-content-center align-items-center'> 
             <Row className='shadow-lg jarak sm' style={{width: '500px'}}>
               <h2>Joystay Login</h2>
+     
+                <Form className="d-grid gap-1 ">        
 
-          
-                <Form className="d-grid gap-1 ">
-                  
                   <Form.Group className="mb-3" id="email">
-                    {/* <Form.Label>Email address</Form.Label> */}
                     <FloatingLabel controlId="floatingEmail" label="Email">
                       <Form.Control name="email" 
                       onChange={inputHandler} 
@@ -117,9 +88,7 @@ function LoginPage() {
                   style={{ background: '#f4ebd0', color: 'black', borderStyle:'none' }} >
                   Login
                   </Button>
-                  </Form>
-
-                     
+                  </Form>       
 
                   <Nav className='justify-content-center mt-3 gap-0' >
                     <Nav.Item>
@@ -130,14 +99,9 @@ function LoginPage() {
                     </Nav.Item>
                   </Nav>
                   
-
-
             </Row>
-        </Container>
-        
-      
+        </Container> 
     </>
-    
   );
 }
 

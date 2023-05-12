@@ -71,7 +71,7 @@ function ChangePassword() {
           
         );
         navigate("/");
-        // console.log("user edited");
+        
         console.log(response.data);
       } catch (error) {
         console.log(error);
@@ -92,29 +92,7 @@ function ChangePassword() {
     }
   }, [formik.values]);
 
-  // const handleChangePassword = async (event) => {
-  //   event.preventDefault();
-  //   if (newPassword !== confirmPassword) {
-  //     setErrorMessage("New password and confirm password do not match");
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axiosInstance.patch(
-  //       `/auth/changePassword`,
-  //       {
-  //         oldPassword,
-  //         newPassword,
-  //       }
-  //     );
-  //     navigate("/");
-  //     // console.log("user edited");
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setErrorMessage("Failed to change password");
-  //   }
-  // };
-
+  
   return (
     <>
 
@@ -130,8 +108,6 @@ function ChangePassword() {
           <FloatingLabel controlId='floatingOldPass' label='Old Password'>
             <FormControl 
                 name='OldPass' 
-                // value={oldPassword} 
-                // onChange={(e) => formik.setFieldValue('oldPassword', e.target.value)} required
                 {...formik.getFieldProps('oldPassword')}
                 type={oldPasswordShown ? 'text' : 'password'}  >
             </FormControl>
@@ -146,8 +122,6 @@ function ChangePassword() {
           <FloatingLabel controlId='floatingOldPass' label='New Password'>
             <FormControl 
                 name='NewPass' 
-                // value={newPassword} 
-                // onChange={(event) => setNewPassword(event.target.value)} required
                 {...formik.getFieldProps('newPassword')} 
                 type={newPasswordShown ? 'text' : 'password'}>
             </FormControl>
@@ -162,7 +136,6 @@ function ChangePassword() {
           <FloatingLabel controlId='floatingOldPass' label='ConfirmPassword'>
             <FormControl 
                 name='ConfirmPass' 
-                // value={confirmPassword} 
                 {...formik.getFieldProps('confirmPassword')} 
                 type={confirmPasswordShown ? 'text' : 'password'} >
             </FormControl>

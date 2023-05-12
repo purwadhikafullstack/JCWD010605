@@ -23,7 +23,6 @@ const propertysController = {
           },
         ],
 
-        // order: [['id', 'DESC']],
       });
 
       return res.status(200).json({
@@ -68,7 +67,6 @@ const propertysController = {
           {
             model: fasilities,
             through: propertys_fasilities,
-            // attributes: ['property_id', 'fasility_id'],
           },
           {
             model: categories,
@@ -94,83 +92,6 @@ const propertysController = {
     }
   },
 
-  // getRooms: async (req, res) => {
-  //   try {
-  //     const id = req.params.id;
-
-  //     console.log(id);
-
-  //     const result = await rooms.findAll({
-  //       attributes: ['id', 'name', 'description', 'roomImage', 'status', 'propertys_id', 'available_date_id', 'special_price_id'],
-  //       include: [
-  //         {
-  //           model: propertys,
-  //           attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
-  //           include: [
-  //             {
-  //               model: categories,
-  //               attributes: ['id', 'provinsi', 'kabupaten', 'kecamatan'],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       group: ['propertys_id'],
-  //     });
-  //     console.log(result.dataValues);
-
-  //     return res.status(200).json({
-  //       message: 'fetched data property detail',
-  //       result: result,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-
-  //     return res.status(400).json({
-  //       message: err,
-  //     });
-  //   }
-  // },
-
-  // getPropertyDetail: async (req, res) => {
-  //   try {
-  //     const id = req.params.id;
-
-  //     console.log(id);
-
-  //     const result = await rooms.findAll({
-  //       attributes: ['id', 'name', 'description', 'roomImage', 'status', 'propertys_id', 'available_date_id', 'special_price_id'],
-  //       include: [
-  //         {
-  //           model: propertys,
-  //           attributes: ['id', 'name', 'description', 'propertyImage', 'categories_id'],
-  //           where: {
-  //             id: id,
-  //           },
-
-  //           include: [
-  //             {
-  //               model: categories,
-  //               attributes: ['id', 'provinsi', 'kabupaten', 'kecamatan'],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       // group: ['propertys_id'],
-  //     });
-  //     // console.log(result.dataValues);
-
-  //     return res.status(200).json({
-  //       message: 'fetched data property detail',
-  //       result: result,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-
-  //     return res.status(400).json({
-  //       message: err,
-  //     });
-  //   }
-  // },
 
   getRoomsDetail: async (req, res) => {
     try {
@@ -204,9 +125,7 @@ const propertysController = {
             ],
           },
         ],
-        // group: ['propertys_id'],
       });
-      // console.log(result.dataValues);
 
       return res.status(200).json({
         message: 'fetched data property detail',
@@ -286,7 +205,6 @@ const propertysController = {
             ],
           },
         ],
-        // group: ['propertys_id'],
       });
       return res.status(200).json({
         message: 'fetched data booking list',

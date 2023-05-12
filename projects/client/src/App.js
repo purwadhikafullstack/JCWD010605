@@ -6,11 +6,10 @@ import axios from 'axios';
 import { axiosInstance } from './config/config';
 import user_types from './redux/auth/types';
 import { useDispatch } from 'react-redux';
-// import user_types from "../redux/auth/types";
-// import { keeplogin } from '../../server/src/controllers/auth'
+
 
 function App() {
-  // const [message, setMessage] = useState('');
+
   const dispatch = useDispatch();
 const keeplogin = async () => {
   try {
@@ -38,7 +37,7 @@ useEffect(() => {
   if (token) {
     keeplogin();
   } else {
-    // Handle case when there is no token available
+
   }
 }, []);
 

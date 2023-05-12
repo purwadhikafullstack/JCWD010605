@@ -1,4 +1,3 @@
-//storage tempat penyimpanan reducers
 import { combineReducers } from "redux";
 import userReducer from "./auth/auth";
 

@@ -29,11 +29,9 @@ const RegisterTenantForm = () => {
         .post('/auth/register-tenant', values)
         .then((response) => {
           console.log(response.data);
-          // Lakukan sesuatu jika pendaftaran berhasil
         })
         .catch((error) => {
           console.log(error);
-          // Lakukan sesuatu jika pendaftaran gagal
         })
         .finally(() => {
           setSubmitting(false);

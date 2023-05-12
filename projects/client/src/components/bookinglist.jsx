@@ -10,7 +10,7 @@ export default function BookingList() {
     await axiosInstance
       .get('/propertys/bookinglist')
       .then((res) => {
-        // console.log(res.data.result);
+        
         const datas = res.data.result;
 
         setBookingList([...datas]);
