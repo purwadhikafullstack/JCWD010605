@@ -29,11 +29,11 @@ Navbar.Collapse > Nav > Nav.Link > .navcoba:hover {
   background-color: #b68d40;
   color: white;
   text-align: center;
-  border: solid 2px #b68d40;
+  border: solid 1px #b68d40;
 }
 
 #btn-nav-tan2:hover {
-  border: solid 2px #a57f39;
+  border: solid 1px #a57f39;
   background-color: #a57f39;
   color: white;
 }
@@ -78,7 +78,13 @@ Navbar.Collapse > Nav > Nav.Link > .navcoba:hover {
   width: 23rem;
 }
 
+.cardPosition {
+  top: 18rem;
+  right: 6rem;
+  width: 23rem;
+}
+
 .sticky-stop {
-  padding-top: 7rem;
+  padding-top: 15rem;
   /* margin-top: 20rem; */
 }
