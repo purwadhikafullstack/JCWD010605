@@ -5,24 +5,32 @@ import {
   Col,
   Button,
   Badge,
-  Form,
   Card,
+  Modal,
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import NavbarTop from './navbar';
-import Banner from '../img/banner3.jpg';
 import Footer from './footer';
 import { useParams } from 'react-router-dom';
 import { axiosInstance } from '../config/config.js';
 import '../css/style.css';
 
+import { DateRange } from 'react-date-range';
+import moment from 'moment';
+import 'moment-timezone';
+
 export default function PropertyDetail() {
   const [detailPro, setDetailPro] = useState([]);
   const [roomsDetail, setRoomsDetail] = useState([]);
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const [bookingList, setBookingList] = useState([]);
-
-  const [transRoom, setTransRoom] = useState([]);
+  const [show, setShow] = useState(false);
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  ]);
 
   const { id } = useParams();
 
@@ -54,6 +62,10 @@ export default function PropertyDetail() {
       });
   };
 
+  const convertDate = (date) => {
+    return moment.tz(date, 'Asia/Jakarta');
+  };
+
   const addTransaction = async (val) => {
     const confirmReservation = window.confirm(
       'Are you sure you want to reserve this room?'
@@ -63,15 +75,22 @@ export default function PropertyDetail() {
       await axiosInstance
         .post('/propertys/transaction', {
           room_id: val.id,
-          tgl_checkin: val.property?.name,
+          tgl_checkin: convertDate(dateRange[0].startDate),
+          tgl_checkout: convertDate(dateRange[0].endDate),
         })
         .then((res) => {
           const data = res.data.result;
           console.log(data);
           // update status of room to 'Booked'
+          // val.status = 'Booked';
           val.status = 'Booked';
+
+          // update roomsDetail with new status
+          setRoomsDetail([...roomsDetail]);
+
           // add selected room to array
-          setSelectedRooms([...selectedRooms, val]);
+          setSelectedRooms([val]);
+          // setShowSelectedRooms(true);
         })
         .catch((error) => {
           console.log(error);
@@ -79,18 +98,74 @@ export default function PropertyDetail() {
     }
   };
 
+  const handleSelect = (ranges) => {
+    setDateRange([ranges.selection]);
+  };
+
+  const handleShow = () => {
+    setShow(true);
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
   useEffect(() => {
     fetchDetailProperty();
     fetchRoomsDetail();
-    console.log(detailPro);
+    console.log(selectedRooms);
   }, []);
-  console.log(selectedRooms);
 
   return (
     <>
       <NavbarTop />
+      <Modal
+        size="lg"
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Select Date</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body className="">
+          <h5>{selectedRooms.name}</h5>
+
+          <Container className="text-center">
+            <DateRange
+              className=""
+              onChange={handleSelect}
+              showDateDisplay={true}
+              editableDateInputs={true}
+              moveRangeOnFirstSelection={false}
+              ranges={dateRange}
+              months={2}
+              minDate={new Date()}
+              direction="horizontal"
+            />
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={() => {
+              addTransaction(selectedRooms);
+              handleClose();
+            }}
+          >
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {detailPro.map((detail) => (
         <Container fluid key={detail.id} className="mb-3">
+          {/* detail property image */}
           <Row>
             <Image
               alt=""
@@ -99,40 +174,44 @@ export default function PropertyDetail() {
               style={{ height: '25rem', width: '100%', objectFit: 'cover' }}
             />
           </Row>
-
-          <div className="sticky-card ">
-            <Card
-              className="selected-rooms-card cardPosition2 shadow position-absolute translate-middle-y p-3 bg-light"
-              style={{ height: '25rem' }}
-            >
-              <Card.Body
-                className=" rounded "
-                style={{ backgroundColor: '#e1e6ea' }}
+          {/* sticky card */}
+          {selectedRooms.length > 0 && (
+            <div className="sticky-card ">
+              <Card
+                className="selected-rooms-card cardPosition2 shadow position-absolute translate-middle-y p-3 bg-light"
+                style={{ height: '25rem' }}
               >
-                <Card.Title className="text-center">Selected Rooms</Card.Title>
-                {selectedRooms.map((room) => (
-                  <div key={room.id}>
-                    <h6>{room.name}</h6>
-                    <p>{room.description}</p>
-                    <p>
-                      {new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                      }).format(room.special_price?.price)}
-                    </p>
-                  </div>
-                ))}
-                <Button
-                  className="position-absolute"
-                  style={{ top: '21rem', left: '9rem' }}
-                  href="/bookinglist"
+                <Card.Body
+                  className=" rounded "
+                  style={{ backgroundColor: '#e1e6ea' }}
                 >
-                  continue
-                </Button>
-              </Card.Body>
-            </Card>
-          </div>
-
+                  <Card.Title className="text-center">
+                    Selected Rooms
+                  </Card.Title>
+                  {selectedRooms.map((room) => (
+                    <div key={room.id}>
+                      <h6>{room.name}</h6>
+                      <p>{room.description}</p>
+                      <p>
+                        {new Intl.NumberFormat('id-ID', {
+                          style: 'currency',
+                          currency: 'IDR',
+                        }).format(room.special_price?.price)}
+                      </p>
+                    </div>
+                  ))}
+                  <Button
+                    className="position-absolute"
+                    style={{ top: '21rem', left: '9rem' }}
+                    href="/bookinglist"
+                  >
+                    continue
+                  </Button>
+                </Card.Body>
+              </Card>
+            </div>
+          )}
+          {/* detail property */}
           <Container className="">
             <Row className="mt-5">
               <Col md={8} className="">
@@ -154,18 +233,17 @@ export default function PropertyDetail() {
               <Col md={4} className=""></Col>
             </Row>
           </Container>
-          {detailPro.map((detail) => (
-            <Container key={detail.id} className="">
-              <Row className=" ">
-                <Col md={8} className="mb-4">
-                  <h4>Choose your room </h4>
-                </Col>
+          {/* room head */}
+          <Container key={detail.id} className="">
+            <Row className=" ">
+              <Col md={8} className="mb-4">
+                <h4>Choose your room </h4>
+              </Col>
 
-                <Col md={4} className=""></Col>
-              </Row>
-            </Container>
-          ))}
-
+              <Col md={4} className=""></Col>
+            </Row>
+          </Container>
+          {/* maping room list */}
           {roomsDetail.map((val, idx) => (
             <Container key={idx} className="">
               <Row
@@ -201,8 +279,12 @@ export default function PropertyDetail() {
                 <Col md={1} className="">
                   <Button
                     onClick={() => {
-                      addTransaction(val);
+                      setSelectedRooms(val);
+                      handleShow();
                     }}
+                    // onClick={() => {
+                    //   addTransaction(val);
+                    // }}
                     disabled={val.status === 'Booked'}
                   >
                     {' '}
@@ -215,6 +297,7 @@ export default function PropertyDetail() {
           ))}
         </Container>
       ))}
+      {/* footer */}
       <Container fluid className="sticky-stop">
         <Footer />
       </Container>

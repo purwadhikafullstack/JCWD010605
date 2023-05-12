@@ -184,7 +184,7 @@ const propertysController = {
     const t = await sequelize.transaction();
 
     try {
-      const { room_id, order_status, tgl_checkin } = req.body;
+      const { room_id, tgl_checkin, tgl_checkout } = req.body;
 
       // console.log('request:', req.body);
 
@@ -192,6 +192,7 @@ const propertysController = {
         room_id: room_id,
         order_status: 'Menunggu Pembayaran',
         tgl_checkin: tgl_checkin,
+        tgl_checkout: tgl_checkout,
       });
 
       await rooms.update(

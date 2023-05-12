@@ -125,7 +125,7 @@ export default function BookingList() {
           // console.log(cancelledTransaction);
 
           setCanceled([...canceled, cancelledTransaction]);
-
+          window.location.reload(); // Reload the page
           // console.log(res.data.result);
         })
         .catch((error) => {

@@ -10,10 +10,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       tgl_checkin: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       tgl_checkout: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       bukti_pembayaran: {
         type: Sequelize.STRING
