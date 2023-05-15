@@ -3,20 +3,30 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import rootReducer from "./redux/store";
+import { Provider } from "react-redux";
+import AuthProvider from "./hoc/authProvider";
+import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-// import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-// import '@fortawesome/fontawesome-free/css/all.min.css';
 
+
+const store = configureStore({ reducer: rootReducer, middleware: [thunk] });
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  // <Registerscreen />
+  // <React.StrictMode>
+    <Provider store={store}>
+      <AuthProvider>
+        <BrowserRouter>
+          <App /> 
+        </BrowserRouter>
+      </AuthProvider>
+     </Provider>
+//  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

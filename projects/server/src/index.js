@@ -20,13 +20,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //#region API ROUTES
-const { propertysRoute, authRoute } = require('./routes');
+const { authRoute, propertysRoute, categoriesRoute } = require('./routes');
 
 const db = require('./models');
+db.sequelize.sync({ alter: true });
+
+app.use('/auth', authRoute);
+app.use('/propertys', propertysRoute);
+app.use('/categories', categoriesRoute)
+
 // db.sequelize.sync({ alter: true });
 
-app.use('/propertys', propertysRoute);
-app.use('/auth', authRoute);
+
 
 app.use('/payment_proof', express.static(`${__dirname}/public/PaymentProof/`));
 // ===========================
@@ -36,7 +41,8 @@ app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`);
 });
 
-app.get('/api/greetings', (req, res, next) => {
+
+app.get("/api/greetings", (req, res, next) => {
   res.status(200).json({
     message: 'Hello, Student !',
   });

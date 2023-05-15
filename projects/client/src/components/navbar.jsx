@@ -1,8 +1,26 @@
-import { Container, Navbar, Nav, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, NavLink } from 'react-bootstrap';
 import Logo from '../img/jgreen.png';
 import '../css/style.css';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import user_types from '../redux/auth/types';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 function NavbarTop() {
+
+  const dispatch = useDispatch()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const auth = useSelector((state) => state.auth) 
+  console.log(auth);
+
+  function logOut() {
+    setIsLoggedIn(false);
+    dispatch({
+      type: user_types.USER_LOGOUT,
+    });
+    localStorage.clear();
+  }
+ 
   return (
     <>
       <Navbar collapseOnSelect className="border-bottom border-1" expand="lg" sticky="top" style={{ background: '#F4EBD0' }} variant="light">
@@ -14,26 +32,45 @@ function NavbarTop() {
           <Navbar.Collapse id="responsive-navbar-nav ">
             <hr />
             <Nav className="me-auto ms-3">
-              <Nav.Link className="mx-2" href="#features">
+              <Link id="btn-nav-left" className="mx-2" to="#features">
                 Hotels
-              </Nav.Link>
-              <Nav.Link className="mx-2" href="#pricing">
+              </Link>
+              
+                <Link id="btn-nav-left" className="mx-2" to={auth.email? "/bookinglist": "/notfound"}>
+                Booking List
+              </Link>
+
+              <Link id="btn-nav-left" className="mx-2" href="#pricing">
                 About
-              </Nav.Link>
-              <Nav.Link className="mx-2" href="#pricing">
+              </Link>
+              <Link id="btn-nav-left" className="mx-2" href="#pricing">
                 About
-              </Nav.Link>
-              <Nav.Link className="mx-2" href="#pricing">
+              </Link>
+              <Link id="btn-nav-left" className="mx-2" href="#pricing">
                 About
-              </Nav.Link>
+              </Link>
+             
             </Nav>
             <Nav className="gap-2">
-              <Button size="sm" className="rounded-2" href="#" variant="light" id="btn-nav-tan">
-                Sign in
-              </Button>
-              <Button size="sm" className="rounded-2" id="btn-nav-tan2" variant="light" href="#">
-                Sign up
-              </Button>
+              {auth.email ? (
+                <>
+                 <Link id="btn-nav-left" className="mx-2" href="#profile">
+                  Profile
+                </Link>
+                  <Link size="sm" className="rounded-2" to="/" variant="light" id="btn-nav-left" onClick={logOut}>
+                    Logout
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Button size="sm" className="rounded-2" href="/login" variant="light" id="btn-nav-tan">
+                    Sign in
+                  </Button>
+                  <Button size="sm" className="rounded-2" id="btn-nav-tan2" variant="light" href="/register">
+                    Sign up
+                  </Button>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
