@@ -13,10 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   transaction.init(
     {
-      tgl_checkin: DataTypes.STRING,
-      tgl_checkout: DataTypes.STRING,
+      tgl_checkin: DataTypes.DATE,
+      tgl_checkout: DataTypes.DATE,
       bukti_pembayaran: DataTypes.STRING,
       order_status: DataTypes.STRING,
+      payment_deadline: DataTypes.DATE,
       users_id: DataTypes.INTEGER,
       reviews_id: DataTypes.INTEGER,
       room_id: DataTypes.INTEGER,
