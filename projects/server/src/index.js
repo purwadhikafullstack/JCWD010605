@@ -27,11 +27,9 @@ db.sequelize.sync({ alter: true });
 
 app.use('/auth', authRoute);
 app.use('/propertys', propertysRoute);
-app.use('/categories', categoriesRoute)
+app.use('/categories', categoriesRoute);
 
 // db.sequelize.sync({ alter: true });
-
-
 
 app.use('/payment_proof', express.static(`${__dirname}/public/PaymentProof/`));
 // ===========================
@@ -41,8 +39,7 @@ app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`);
 });
 
-
-app.get("/api/greetings", (req, res, next) => {
+app.get('/api/greetings', (req, res, next) => {
   res.status(200).json({
     message: 'Hello, Student !',
   });
