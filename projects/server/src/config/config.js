@@ -4,7 +4,7 @@ module.exports = {
     password: process.env.pass,
     database: process.env.db,
     host: process.env.host,
-    dialect: process.env.dialect
+    dialect: process.env.dialect,
   },
   // test: {
   //   username: root,
@@ -13,11 +13,11 @@ module.exports = {
   //   host: 127.0.0.1,
   //   dialect: mysql
   // },
-  // production: {
-  //   username: root,
-  //   password: null,
-  //   database: database_production,
-  //   host: 127.0.0.1,
-  //   dialect: mysql
-  // }
+  production: {
+    username: process.env.user,
+    password: process.env.pass,
+    database: process.env.db,
+    host: process.env.host,
+    dialect: process.env.dialect,
+  },
 };
