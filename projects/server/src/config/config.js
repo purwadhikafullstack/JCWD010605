@@ -18,6 +18,6 @@ module.exports = {
     password: process.env.pass,
     database: process.env.db,
     host: process.env.host,
-    dialect: process.env.dialect,
+    dialect: "mysql",
   },
 };
